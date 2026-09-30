@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: rk.traminer 0.0.1\n"
+"Report-Msgid-Bugs-To: alfonso.cano@correo.buap.mx\n"
+"POT-Creation-Date: 2026-09-19 20:18-0600\n"
+"PO-Revision-Date: 2026-09-19 20:18-0600\n"
+"Last-Translator: \n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Sequence Analysis Dashboard"
+msgstr "Sequenzanalyse-Dashboard"
+
+msgid "Data & Variables"
+msgstr "Daten & Variablen"
+
+msgid "Variables (Sequence states over time)"
+msgstr "Variablen (Sequenzzustände im Zeitverlauf)"
+
+msgid "Identifier (Optional, e.g., Patient/Subject ID)"
+msgstr "Identifikator (Optional, z. B. Patienten-/Probanden-ID)"
+
+msgid "Missing Data Handling"
+msgstr "Umgang mit fehlenden Daten"
+
+msgid "Left gaps (Before sequence starts)"
+msgstr "Lücken links (Vor Beginn der Sequenz)"
+
+msgid "Void gaps (Internal missing data)"
+msgstr "Leere Lücken (Interne fehlende Daten)"
+
+msgid "Right gaps (After sequence ends)"
+msgstr "Lücken rechts (Nach Ende der Sequenz)"
+
+msgid "Delete / Ignore (DEL)"
+msgstr "Löschen / Ignorieren (DEL)"
+
+msgid "Treat as missing (NA)"
+msgstr "Als fehlend behandeln (NA)"
+
+msgid "Dashboard Plots"
+msgstr "Dashboard-Diagramme"
+
+msgid "State Distribution Plot (seqdplot)"
+msgstr "Zustandsverteilungsdiagramm (seqdplot)"
+
+msgid "Sequence Frequency Plot (seqfplot)"
+msgstr "Sequenzhäufigkeitsdiagramm (seqfplot)"
+
+msgid "Sequence Index Plot (seqIplot)"
+msgstr "Sequenzindexdiagramm (seqIplot)"
+
+msgid "Mean Time Plot (seqmtplot)"
+msgstr "Durchschnittszeit-Diagramm (seqmtplot)"
+
+msgid "Smart Column Selection (tidyselect)"
+msgstr "Intelligente Spaltenauswahl (tidyselect)"
+
+msgid "None (Use manual selection above)"
+msgstr "Keine (Manuelle Auswahl oben verwenden)"
+
+msgid "starts_with() - Exact prefix"
+msgstr "starts_with() - Exaktes Präfix"
+
+msgid "ends_with() - Exact suffix"
+msgstr "ends_with() - Exaktes Suffix"
+
+msgid "contains() - Literal string"
+msgstr "contains() - Zeichenfolge"
+
+msgid "matches() - Regular expression"
+msgstr "matches() - Regulärer Ausdruck"
+
+msgid "Custom (Raw tidyselect expression)"
+msgstr "Benutzerdefiniert (Roher tidyselect-Ausdruck)"
+
+msgid "Value / Pattern (No quotes needed for prefix/suffix)"
+msgstr "Wert / Muster (Keine Anführungszeichen für Präfix/Suffix nötig)"

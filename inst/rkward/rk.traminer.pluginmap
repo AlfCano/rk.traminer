@@ -1,0 +1,77 @@
+<!DOCTYPE
+	rkpluginmap
+>
+<document
+	base_prefix=""
+	namespace="SequenceDashboard"
+	id="SequenceDashboard_rkward"
+	po_id="SequenceDashboard_rkward"
+	priority="medium"
+>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<about
+		name="rk.traminer"
+		shortinfo="An RKWard GUI plugin for Sequence Analysis and Trajectory mining using TraMineR."
+		longinfo="An RKWard GUI plugin for Sequence Analysis and Trajectory mining using TraMineR."
+		version="0.0.1"
+		releasedate="2026-09-29"
+		url="https://github.com/AlfCano/rk.traminer"
+		license="GPL (&gt;= 3)"
+	>
+		<author
+			given="Alfonso"
+			family="Cano"
+			email="alfonso.cano@correo.buap.mx"
+			role="aut, cre"
+		/>
+	</about>
+	<require
+		map="rkward::menu"
+	/>
+	<require
+		map="rkward::embedded"
+	/>
+	<components>
+		<component
+			id="cmp_SequenceDashbrdSqncDshbrd"
+			label="Sequence Dashboard"
+			type="standard"
+			file="plugins/SequenceDashboard.xml"
+		>
+		</component>
+	</components>
+	<hierarchy>
+		<menu
+			id="plots"
+			label="Plots"
+		>
+			<menu
+				id="SequenceAnalysisTraMineR"
+				label="Sequence Analysis (TraMineR)"
+			>
+				<entry
+					component="cmp_SequenceDashbrdSqncDshbrd"
+				/>
+			</menu>
+		</menu>
+	</hierarchy>
+	<!--
+		<context
+			id="x11"
+		>
+		</context>
+	-->
+	<!--
+		<context
+			id="import"
+		>
+		</context>
+	-->
+</document>

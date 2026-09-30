@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: rk.traminer 0.0.1\n"
+"Report-Msgid-Bugs-To: alfonso.cano@correo.buap.mx\n"
+"POT-Creation-Date: 2026-09-19 20:18-0600\n"
+"PO-Revision-Date: 2026-09-19 20:18-0600\n"
+"Last-Translator: \n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+msgid "Sequence Analysis Dashboard"
+msgstr "Tableau de Bord d'Analyse de Séquences"
+
+msgid "Data & Variables"
+msgstr "Données et Variables"
+
+msgid "Variables (Sequence states over time)"
+msgstr "Variables (États de la séquence dans le temps)"
+
+msgid "Identifier (Optional, e.g., Patient/Subject ID)"
+msgstr "Identifiant (Optionnel, ex., ID Patient/Sujet)"
+
+msgid "Missing Data Handling"
+msgstr "Gestion des Données Manquantes"
+
+msgid "Left gaps (Before sequence starts)"
+msgstr "Lacunes à gauche (Avant le début de la séquence)"
+
+msgid "Void gaps (Internal missing data)"
+msgstr "Lacunes vides (Données manquantes internes)"
+
+msgid "Right gaps (After sequence ends)"
+msgstr "Lacunes à droite (Après la fin de la séquence)"
+
+msgid "Delete / Ignore (DEL)"
+msgstr "Supprimer / Ignorer (DEL)"
+
+msgid "Treat as missing (NA)"
+msgstr "Traiter comme manquant (NA)"
+
+msgid "Dashboard Plots"
+msgstr "Graphiques du Tableau de Bord"
+
+msgid "State Distribution Plot (seqdplot)"
+msgstr "Graphique de Distribution des États (seqdplot)"
+
+msgid "Sequence Frequency Plot (seqfplot)"
+msgstr "Graphique de Fréquence des Séquences (seqfplot)"
+
+msgid "Sequence Index Plot (seqIplot)"
+msgstr "Graphique d'Index des Séquences (seqIplot)"
+
+msgid "Mean Time Plot (seqmtplot)"
+msgstr "Graphique du Temps Moyen (seqmtplot)"
+
+msgid "Smart Column Selection (tidyselect)"
+msgstr "Sélection Intelligente de Colonnes (tidyselect)"
+
+msgid "None (Use manual selection above)"
+msgstr "Aucun (Utiliser la sélection manuelle ci-dessus)"
+
+msgid "starts_with() - Exact prefix"
+msgstr "starts_with() - Préfixe exact"
+
+msgid "ends_with() - Exact suffix"
+msgstr "ends_with() - Suffixe exact"
+
+msgid "contains() - Literal string"
+msgstr "contains() - Chaîne littérale"
+
+msgid "matches() - Regular expression"
+msgstr "matches() - Expression régulière"
+
+msgid "Custom (Raw tidyselect expression)"
+msgstr "Personnalisé (Expression tidyselect brute)"
+
+msgid "Value / Pattern (No quotes needed for prefix/suffix)"
+msgstr "Valeur / Modèle (Pas besoin de guillemets pour le préfixe/suffixe)"
+

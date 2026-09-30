@@ -1,0 +1,99 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="SequenceDashboard.js" />
+	<help file="SequenceDashboard.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<convert id="show_helper_val" sources="c1_helper_mode.string" mode="notequals" standard="none" />
+		<connect governor="c1_df.available" client="c1_sel.root" />
+		<connect governor="show_helper_val.state" client="c1_helper_val.visible.enabled" />
+	</logic>
+	<dialog label="Sequence Analysis Dashboard">
+		<row id="row_v11SD1DVDV">
+			<varselector id="c1_sel" />
+			<column id="clm_v1SD1DVDV1">
+				<varslot id="c1_df" label="Select Dataframe" source="c1_sel" classes="data.frame" required="true" />
+				<tabbook>
+					<tab label="Data &amp; Variables" id="tab_DatVrbls">
+						<column id="clm_v1VS1AS11S">
+							<varslot id="c1_vars" label="Variables (Sequence states over time)" source="c1_sel" multi="true" />
+							<frame label="Advanced Select" id="c1_helper_frame">
+								<column id="clm_d1SCSNUEEL">
+									<dropdown id="c1_helper_mode" label="Smart Column Selection (tidyselect)">
+										<option label="None (Use manual selection above)" value="none" checked="true" />
+										<option label="starts_with() - Exact prefix" value="starts_with" />
+										<option label="ends_with() - Exact suffix" value="ends_with" />
+										<option label="contains() - Literal string" value="contains" />
+										<option label="matches() - Regular expression" value="matches" />
+										<option label="Custom (Raw tidyselect expression)" value="custom" />
+									</dropdown>
+									<input label="Value / Pattern (No quotes needed for prefix/suffix)" id="c1_helper_val" />
+								</column>
+							</frame>
+							<frame label="Metadata" id="frm_Metadata">
+								<varslot id="c1_id" label="Identifier (Optional, e.g., Patient/Subject ID)" source="c1_sel" />
+							</frame>
+							<stretch />
+						</column>
+					</tab>
+					<tab label="Missing Data Handling" id="tab_MssngDtH">
+						<column id="clm_d1LBDIDELD">
+							<dropdown id="c1_left" label="Left gaps (Before sequence starts)">
+								<option label="Delete / Ignore (DEL)" value="DEL" checked="true" />
+								<option label="Treat as missing (NA)" value="NA" />
+							</dropdown>
+							<dropdown id="c1_void" label="Void gaps (Internal missing data)">
+								<option label="Delete / Ignore (DEL)" value="DEL" checked="true" />
+								<option label="Treat as missing (NA)" value="NA" />
+							</dropdown>
+							<dropdown id="c1_right" label="Right gaps (After sequence ends)">
+								<option label="Delete / Ignore (DEL)" value="DEL" checked="true" />
+								<option label="Treat as missing (NA)" value="NA" />
+							</dropdown>
+							<stretch />
+						</column>
+					</tab>
+					<tab label="Dashboard Plots" id="tab_DshbrdPl">
+						<column id="clm_c1SDPTRUE1">
+							<checkbox id="c1_p_dist" label="State Distribution Plot (seqdplot)" value="TRUE" checked="true" />
+							<checkbox id="c1_p_freq" label="Sequence Frequency Plot (seqfplot)" value="TRUE" checked="true" />
+							<checkbox id="c1_p_idx" label="Sequence Index Plot (seqIplot)" value="TRUE" checked="true" />
+							<checkbox id="c1_p_time" label="Mean Time Plot (seqmtplot)" value="TRUE" checked="true" />
+							<stretch />
+						</column>
+					</tab>
+					<tab label="Output" id="tab_Output">
+						<column id="clm_fGDGD1DPNG">
+							<frame label="Graphics Device" id="frm_GrphcsDv">
+								<dropdown id="c1_dev_type" label="Device type">
+									<option label="PNG" value="PNG" checked="true" />
+									<option label="SVG" value="SVG" />
+								</dropdown>
+								<row id="row_sW11024100">
+									<spinbox label="Width (px)" id="c1_dev_w" initial="1024" min="100" max="4000" />
+									<spinbox label="Height (px)" id="c1_dev_h" initial="1024" min="100" max="4000" />
+								</row>
+								<column id="clm_sR11505060">
+									<spinbox label="Resolution (ppi)" id="c1_dev_res" initial="150" min="50" max="600" />
+									<dropdown id="c1_dev_bg" label="Background">
+										<option label="Transparent" value="transparent" checked="true" />
+										<option label="White" value="white" />
+									</dropdown>
+								</column>
+							</frame>
+							<saveobject label="Save Object As" checkable="true" checked="true" initial="tray_seq" id="c1_save" />
+							<preview label="Preview" id="c1_preview" />
+						</column>
+					</tab>
+				</tabbook>
+			</column>
+		</row>
+	</dialog>
+</document>

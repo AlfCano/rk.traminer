@@ -1,0 +1,75 @@
+<!DOCTYPE rkhelp >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<title>
+		Sequence Dashboard
+	</title>
+	<summary>
+	</summary>
+	<usage>
+	</usage>
+	<!--
+		<section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+			EDIT OR DELETE ME
+		</section>
+	-->
+	<settings>
+		<setting id="c1_df">
+		</setting>
+		<caption id="tab_DatVrbls" />
+		<setting id="c1_vars">
+		</setting>
+		<caption id="c1_helper_frame" />
+		<setting id="c1_helper_mode">
+		</setting>
+		<setting id="c1_helper_val">
+		</setting>
+		<caption id="frm_Metadata" />
+		<setting id="c1_id">
+		</setting>
+		<caption id="tab_MssngDtH" />
+		<setting id="c1_left">
+		</setting>
+		<setting id="c1_void">
+		</setting>
+		<setting id="c1_right">
+		</setting>
+		<caption id="tab_DshbrdPl" />
+		<setting id="c1_p_dist">
+		</setting>
+		<setting id="c1_p_freq">
+		</setting>
+		<setting id="c1_p_idx">
+		</setting>
+		<setting id="c1_p_time">
+		</setting>
+		<caption id="tab_Output" />
+		<caption id="frm_GrphcsDv" />
+		<setting id="c1_dev_type">
+		</setting>
+		<setting id="c1_dev_w">
+		</setting>
+		<setting id="c1_dev_h">
+		</setting>
+		<setting id="c1_dev_res">
+		</setting>
+		<setting id="c1_dev_bg">
+		</setting>
+		<setting id="c1_save">
+		</setting>
+	</settings>
+	<!--
+		<related>
+			<ul>
+				<li>
+					<link href="rkward://rhelp/..." />
+				</li>
+			</ul>
+		</related>
+	-->
+	<technical>
+	</technical>
+</document>
