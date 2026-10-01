@@ -1,0 +1,92 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="SequenceClustering.js" />
+	<help file="SequenceClustering.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<convert id="show_helper_val2" sources="c2_helper_mode.string" mode="notequals" standard="none" />
+		<connect governor="c2_df.available" client="c2_sel.root" />
+		<connect governor="show_helper_val2.state" client="c2_helper_val.visible.enabled" />
+	</logic>
+	<dialog label="Sequence Clustering &amp; Typology">
+		<row id="row_v22MD2DCDC">
+			<varselector id="c2_sel" />
+			<column id="clm_v2MD2DCDC2">
+				<varslot id="c2_df" label="Main Dataframe" source="c2_sel" classes="data.frame" required="true" />
+				<tabbook>
+					<tab label="Data &amp; Covariates" id="tab_DatCvrts">
+						<column id="clm_v2SV2AS22S">
+							<varslot id="c2_vars" label="Sequence Variables" source="c2_sel" multi="true" />
+							<frame label="Advanced Select" id="c2_helper_frame">
+								<column id="clm_d2SCSNUEEL">
+									<dropdown id="c2_helper_mode" label="Smart Column Selection (tidyselect)">
+										<option label="None (Use manual selection above)" value="none" checked="true" />
+										<option label="starts_with() - Exact prefix" value="starts_with" />
+										<option label="ends_with() - Exact suffix" value="ends_with" />
+										<option label="contains() - Literal string" value="contains" />
+										<option label="matches() - Regular expression" value="matches" />
+										<option label="Custom (Raw tidyselect expression)" value="custom" />
+									</dropdown>
+									<input label="Value / Pattern (No quotes needed)" id="c2_helper_val" />
+								</column>
+							</frame>
+							<frame label="Cross-tabulation" id="frm_Crsstblt">
+								<varslot id="c2_covs" label="Covariates for Profiling (e.g. sexo, migracion)" source="c2_sel" multi="true" />
+							</frame>
+							<stretch />
+						</column>
+					</tab>
+					<tab label="Clustering Settings" id="tab_ClstrngS">
+						<column id="clm_tMOMCCWHMO">
+							<text id="txt_bMOMCCWH">
+								<b>
+									Method:
+								</b>
+								Optimal Matching (Constant Cost) to Ward Hierarchical Clustering
+							</text>
+							<spinbox label="Number of clusters (k)" id="c2_k" initial="3" min="2" max="50" />
+							<input label="Name for new Cluster column" id="c2_name" initial="cluster_tray" required="true" />
+							<checkbox id="c2_append" label="Append cluster column to original Dataframe" value="1" checked="true" />
+							<radio id="c2_plot_type" label="Plot Type">
+								<option label="State Distribution Plot by Cluster (ggseqplot)" value="dist" checked="true" />
+								<option label="Hierarchical Dendrogram (hclust)" value="dendro" />
+							</radio>
+							<saveobject label="Save Clustering Model (hclust) as" checkable="true" initial="cluster_ward" id="c2_save_model" />
+							<stretch />
+						</column>
+					</tab>
+					<tab label="Output" id="tab_Output">
+						<column id="clm_fGDGD2DPNG">
+							<frame label="Graphics Device" id="frm_GrphcsDv">
+								<dropdown id="c2_dev_type" label="Device type">
+									<option label="PNG" value="PNG" checked="true" />
+									<option label="SVG" value="SVG" />
+								</dropdown>
+								<row id="row_sW21024100">
+									<spinbox label="Width (px)" id="c2_dev_w" initial="1024" min="100" max="4000" />
+									<spinbox label="Height (px)" id="c2_dev_h" initial="1024" min="100" max="4000" />
+								</row>
+								<column id="clm_sR21505060">
+									<spinbox label="Resolution (ppi)" id="c2_dev_res" initial="150" min="50" max="600" />
+									<dropdown id="c2_dev_bg" label="Background">
+										<option label="Transparent" value="transparent" checked="true" />
+										<option label="White" value="white" />
+									</dropdown>
+								</column>
+							</frame>
+							<saveobject label="Save Object As" checkable="true" checked="true" initial="cluster_plot" id="c2_save" />
+							<preview label="Preview" id="c2_preview" />
+						</column>
+					</tab>
+				</tabbook>
+			</column>
+		</row>
+	</dialog>
+</document>

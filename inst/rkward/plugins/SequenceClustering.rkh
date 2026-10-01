@@ -1,0 +1,67 @@
+<!DOCTYPE rkhelp >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<summary>
+	</summary>
+	<usage>
+	</usage>
+	<!--
+		<section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+			EDIT OR DELETE ME
+		</section>
+	-->
+	<settings>
+		<setting id="c2_df">
+		</setting>
+		<caption id="tab_DatCvrts" />
+		<setting id="c2_vars">
+		</setting>
+		<caption id="c2_helper_frame" />
+		<setting id="c2_helper_mode">
+		</setting>
+		<setting id="c2_helper_val">
+		</setting>
+		<caption id="frm_Crsstblt" />
+		<setting id="c2_covs">
+		</setting>
+		<caption id="tab_ClstrngS" />
+		<setting id="c2_k">
+		</setting>
+		<setting id="c2_name">
+		</setting>
+		<setting id="c2_append">
+		</setting>
+		<setting id="c2_plot_type">
+		</setting>
+		<setting id="c2_save_model">
+		</setting>
+		<caption id="tab_Output" />
+		<caption id="frm_GrphcsDv" />
+		<setting id="c2_dev_type">
+		</setting>
+		<setting id="c2_dev_w">
+		</setting>
+		<setting id="c2_dev_h">
+		</setting>
+		<setting id="c2_dev_res">
+		</setting>
+		<setting id="c2_dev_bg">
+		</setting>
+		<setting id="c2_save">
+		</setting>
+	</settings>
+	<!--
+		<related>
+			<ul>
+				<li>
+					<link href="rkward://rhelp/..." />
+				</li>
+			</ul>
+		</related>
+	-->
+	<technical>
+	</technical>
+</document>

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rk.traminer 0.0.1\n"
+"Project-Id-Version: rk.traminer 0.0.2\n"
 "Report-Msgid-Bugs-To: alfonso.cano@correo.buap.mx\n"
 "POT-Creation-Date: 2026-09-19 20:18-0600\n"
 "PO-Revision-Date: 2026-09-19 20:18-0600\n"
@@ -80,4 +80,49 @@ msgstr "Personnalisé (Expression tidyselect brute)"
 
 msgid "Value / Pattern (No quotes needed for prefix/suffix)"
 msgstr "Valeur / Modèle (Pas besoin de guillemets pour le préfixe/suffixe)"
+
+msgid "Sequence Clustering"
+msgstr "Clustering de Séquences"
+
+msgid "Sequence Clustering & Typology"
+msgstr "Clustering et Typologie de Séquences"
+
+msgid "Data & Covariates"
+msgstr "Données et Covariables"
+
+msgid "Cross-tabulation"
+msgstr "Tableau Croisé"
+
+msgid "Clustering Settings"
+msgstr "Paramètres de Clustering"
+
+msgid "<b>Method:</b> Optimal Matching (Constant Cost) to Ward Hierarchical Clustering"
+msgstr "<b>Méthode:</b> Appariement Optimal (Coût Constant) et Clustering Hiérarchique de Ward"
+
+msgid "Number of clusters (k)"
+msgstr "Nombre de clusters (k)"
+
+msgid "Save cluster factor as (column name)"
+msgstr "Enregistrer le facteur de cluster sous (nom de colonne)"
+
+msgid "Append cluster factor to original dataframe"
+msgstr "Ajouter le facteur de cluster au dataframe original"
+
+msgid "Save Clustering Model (hclust) as"
+msgstr "Enregistrer le Modèle de Clustering (hclust) sous"
+
+msgid "State Distribution Plot by Cluster (ggseqplot)"
+msgstr "Graphique de Distribution des États par Cluster (ggseqplot)"
+
+msgid "Hierarchical Dendrogram (hclust)"
+msgstr "Dendrogramme Hiérarchique (hclust)"
+
+msgid "Cross-Tabulation: Covariates by Cluster"
+msgstr "Tableau Croisé : Covariables par Cluster"
+
+msgid "<b>Covariate:</b>"
+msgstr "<b>Covariable :</b>"
+
+msgid "<span style='color:red;'>Note: Base R Dendrograms cannot be saved as plot objects.</span>"
+msgstr "<span style='color:red;'>Remarque : Les Dendrogrammes R Base ne peuvent pas être enregistrés en tant qu'objets graphiques.</span>"
 

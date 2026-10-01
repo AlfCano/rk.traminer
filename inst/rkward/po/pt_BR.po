@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rk.traminer 0.0.1\n"
+"Project-Id-Version: rk.traminer 0.0.2\n"
 "Report-Msgid-Bugs-To: alfonso.cano@correo.buap.mx\n"
 "POT-Creation-Date: 2026-09-19 20:18-0600\n"
 "PO-Revision-Date: 2026-09-19 20:18-0600\n"
@@ -80,4 +80,53 @@ msgstr "Personalizado (Expressão tidyselect pura)"
 
 msgid "Value / Pattern (No quotes needed for prefix/suffix)"
 msgstr "Valor / Padrão (Não precisa de aspas para prefixo/sufixo)"
+
+# =========================================================
+# COMPONENTE 2: Sequence Clustering
+# =========================================================
+msgid "Sequence Clustering"
+msgstr "Clustering de Sequências"
+
+msgid "Sequence Clustering & Typology"
+msgstr "Clustering e Tipologia de Sequências"
+
+msgid "Data & Covariates"
+msgstr "Dados e Covariáveis"
+
+msgid "Cross-tabulation"
+msgstr "Tabulação Cruzada"
+
+msgid "Clustering Settings"
+msgstr "Configurações de Clustering"
+
+msgid "<b>Method:</b> Optimal Matching (Constant Cost) to Ward Hierarchical Clustering"
+msgstr "<b>Método:</b> Emparelhamento Ótimo (Custo Constante) e Clustering Hierárquico de Ward"
+
+msgid "Number of clusters (k)"
+msgstr "Número de clusters (k)"
+
+msgid "Save cluster factor as (column name)"
+msgstr "Salvar fator de cluster como (nome da coluna)"
+
+msgid "Append cluster factor to original dataframe"
+msgstr "Adicionar fator de cluster ao data frame original"
+
+msgid "Save Clustering Model (hclust) as"
+msgstr "Salvar Modelo de Clustering (hclust) como"
+
+msgid "State Distribution Plot by Cluster (ggseqplot)"
+msgstr "Gráfico de Distribuição de Estados por Cluster (ggseqplot)"
+
+msgid "Hierarchical Dendrogram (hclust)"
+msgstr "Dendrograma Hierárquico (hclust)"
+
+msgid "Cross-Tabulation: Covariates by Cluster"
+msgstr "Tabulação Cruzada: Covariáveis por Cluster"
+
+msgid "<b>Covariate:</b>"
+msgstr "<b>Covariável:</b>"
+
+msgid "<span style='color:red;'>Note: Base R Dendrograms cannot be saved as plot objects.</span>"
+msgstr "<span style='color:red;'>Nota: Os Dendrogramas do R Base não podem ser salvos como objetos gráficos.</span>"
+
 

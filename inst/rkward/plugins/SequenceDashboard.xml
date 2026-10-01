@@ -25,47 +25,47 @@
 						<column id="clm_v1VS1AS11S">
 							<varslot id="c1_vars" label="Variables (Sequence states over time)" source="c1_sel" multi="true" />
 							<frame label="Advanced Select" id="c1_helper_frame">
-								<column id="clm_d1SCSNUEEL">
+								<column id="clm_d1SCSNCVP1">
 									<dropdown id="c1_helper_mode" label="Smart Column Selection (tidyselect)">
-										<option label="None (Use manual selection above)" value="none" checked="true" />
-										<option label="starts_with() - Exact prefix" value="starts_with" />
-										<option label="ends_with() - Exact suffix" value="ends_with" />
-										<option label="contains() - Literal string" value="contains" />
-										<option label="matches() - Regular expression" value="matches" />
-										<option label="Custom (Raw tidyselect expression)" value="custom" />
+										<option label="None" value="none" checked="true" />
+										<option label="starts_with()" value="starts_with" />
+										<option label="ends_with()" value="ends_with" />
+										<option label="contains()" value="contains" />
+										<option label="matches()" value="matches" />
+										<option label="Custom" value="custom" />
 									</dropdown>
-									<input label="Value / Pattern (No quotes needed for prefix/suffix)" id="c1_helper_val" />
+									<input label="Value / Pattern" id="c1_helper_val" />
 								</column>
 							</frame>
 							<frame label="Metadata" id="frm_Metadata">
-								<varslot id="c1_id" label="Identifier (Optional, e.g., Patient/Subject ID)" source="c1_sel" />
+								<varslot id="c1_id" label="Identifier (Optional)" source="c1_sel" />
 							</frame>
 							<stretch />
 						</column>
 					</tab>
 					<tab label="Missing Data Handling" id="tab_MssngDtH">
-						<column id="clm_d1LBDIDELD">
-							<dropdown id="c1_left" label="Left gaps (Before sequence starts)">
-								<option label="Delete / Ignore (DEL)" value="DEL" checked="true" />
-								<option label="Treat as missing (NA)" value="NA" />
+						<column id="clm_d1LDELDELN">
+							<dropdown id="c1_left" label="Left gaps">
+								<option label="DEL" value="DEL" checked="true" />
+								<option label="NA" value="NA" />
 							</dropdown>
-							<dropdown id="c1_void" label="Void gaps (Internal missing data)">
-								<option label="Delete / Ignore (DEL)" value="DEL" checked="true" />
-								<option label="Treat as missing (NA)" value="NA" />
+							<dropdown id="c1_void" label="Void gaps">
+								<option label="DEL" value="DEL" checked="true" />
+								<option label="NA" value="NA" />
 							</dropdown>
-							<dropdown id="c1_right" label="Right gaps (After sequence ends)">
-								<option label="Delete / Ignore (DEL)" value="DEL" checked="true" />
-								<option label="Treat as missing (NA)" value="NA" />
+							<dropdown id="c1_right" label="Right gaps">
+								<option label="DEL" value="DEL" checked="true" />
+								<option label="NA" value="NA" />
 							</dropdown>
 							<stretch />
 						</column>
 					</tab>
 					<tab label="Dashboard Plots" id="tab_DshbrdPl">
 						<column id="clm_c1SDPTRUE1">
-							<checkbox id="c1_p_dist" label="State Distribution Plot (seqdplot)" value="TRUE" checked="true" />
-							<checkbox id="c1_p_freq" label="Sequence Frequency Plot (seqfplot)" value="TRUE" checked="true" />
-							<checkbox id="c1_p_idx" label="Sequence Index Plot (seqIplot)" value="TRUE" checked="true" />
-							<checkbox id="c1_p_time" label="Mean Time Plot (seqmtplot)" value="TRUE" checked="true" />
+							<checkbox id="c1_p_dist" label="State Distribution Plot" value="TRUE" checked="true" />
+							<checkbox id="c1_p_freq" label="Sequence Frequency Plot" value="TRUE" checked="true" />
+							<checkbox id="c1_p_idx" label="Sequence Index Plot" value="TRUE" checked="true" />
+							<checkbox id="c1_p_time" label="Mean Time Plot" value="TRUE" checked="true" />
 							<stretch />
 						</column>
 					</tab>
