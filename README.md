@@ -1,11 +1,21 @@
 # rk.traminer: Sequence Analysis & Trajectory Mining for RKWard
 
-![Version](https://img.shields.io/badge/Version-0.0.1-blue.svg)
+![Version](https://img.shields.io/badge/Version-0.0.2-blue.svg)
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![RKWard](https://img.shields.io/badge/Platform-RKWard-green)
 [![R Linter](https://github.com/AlfCano/rk.traminer/actions/workflows/lintr.yml/badge.svg)](https://github.com/AlfCano/rk.traminer/actions/workflows/lintr.yml)
 
 **rk.traminer** brings the power of Sequence Analysis (Life-course trajectories) to the RKWard GUI. It provides a highly optimized, user-friendly interface for the gold-standard [`TraMineR`](http://traminer.unige.ch/) package. By integrating [`ggseqplot`](https://maraab23.github.io/ggseqplot/) and `patchwork`, it completely modernizes the visual output, allowing researchers in sociology, demography, and economics to easily construct state sequence objects and render stunning, publication-ready dashboards.
+
+## 🚀 What's New in Version 0.0.2
+
+**🧬 Sequence Clustering & Typology Generation**
+
+*   **New Component - Sequence Clustering:** Added a powerful new module to discover hidden patterns in longitudinal data. It groups similar life trajectories using **Optimal Matching (Constant Cost)** distances and **Ward's Hierarchical Clustering** natively from the GUI.
+*   **Automated Cross-Tabulation:** Easily profile your discovered clusters by selecting covariates (e.g., gender, income, region). The plugin automatically generates HTML cross-tabulations to reveal the demographic or structural composition of each trajectory typology.
+*   **Dual Visual Diagnostics:** Toggle instantly between a classic **Hierarchical Dendrogram** (to visually justify your chosen number of clusters, $k$) and a modern **State Distribution Plot by Cluster** powered by `ggseqplot` and faceted automatically.
+*   **Smart Data Management:** Seamlessly append the resulting cluster assignments directly to your original dataframe as a new factor variable with a single click. You can also export the mathematical clustering model (`hclust`) and the `ggplot2` distribution plots to your Global Environment for downstream reporting.
+*   **TidySelect Integration:** The highly praised Smart Column Selection assistant (`starts_with`, `ends_with`, etc.) has been fully integrated into the Clustering component, preventing the need to manually drag dozens of chronological variables.
 
 ## 🚀 What's New in Version 0.0.1 (Initial Release)
 
