@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rk.traminer 0.0.2\n"
+"Project-Id-Version: rk.traminer 0.0.3\n"
 "Report-Msgid-Bugs-To: alfonso.cano@correo.buap.mx\n"
 "POT-Creation-Date: 2026-09-19 20:18-0600\n"
 "PO-Revision-Date: 2026-09-19 20:18-0600\n"
@@ -126,3 +126,71 @@ msgstr "<b>Covariable :</b>"
 msgid "<span style='color:red;'>Note: Base R Dendrograms cannot be saved as plot objects.</span>"
 msgstr "<span style='color:red;'>Remarque : Les Dendrogrammes R Base ne peuvent pas être enregistrés en tant qu'objets graphiques.</span>"
 
+msgid "Substitution Cost Method (sm)"
+msgstr "Méthode de Coût de Substitution (sm)"
+
+msgid "Constant Cost (CONSTANT)"
+msgstr "Coût Constant (CONSTANT)"
+
+msgid "Transition Rates (TRATE) - Data driven"
+msgstr "Taux de Transition (TRATE) - Basé sur les données"
+
+msgid "<span style='color:red;'>Note: Base R Dendrograms cannot be saved as plot objects. Save object set to NULL.</span>"
+msgstr "<span style='color:red;'>Remarque : Les Dendrogrammes R Base ne peuvent pas être enregistrés. Objet défini sur NULL.</span>"
+
+msgid "3. Sequence Indicators"
+msgstr "3. Indicateurs de Séquence"
+
+msgid "Extract Sequence Indicators"
+msgstr "Extraire des Indicateurs de Séquence"
+
+msgid "Calculates complexity, entropy, and turbulence and appends them to the dataframe."
+msgstr "Calcule la complexité, l'entropie et la turbulence et les ajoute au dataframe."
+
+msgid "Sequence Object (seqdef)"
+msgstr "Objet de Séquence (seqdef)"
+
+msgid "Original Dataframe (To append metrics)"
+msgstr "Dataframe Original (Pour ajouter des métriques)"
+
+msgid "Metrics to Extract"
+msgstr "Métriques à Extraire"
+
+msgid "Number of Transitions (seqtransn)"
+msgstr "Nombre de Transitions (seqtransn)"
+
+msgid "Longitudinal Entropy (seqient)"
+msgstr "Entropie Longitudinale (seqient)"
+
+msgid "Turbulence (seqST)"
+msgstr "Turbulence (seqST)"
+
+msgid "Complexity Index (seqici)"
+msgstr "Indice de Complexité (seqici)"
+
+msgid "Append selected metrics to Original Dataframe"
+msgstr "Ajouter les métriques sélectionnées au Dataframe Original"
+
+msgid "Sequence Indicators Extracted"
+msgstr "Indicateurs de Séquence Extraits"
+
+msgid "<b>Metrics successfully calculated and appended to:</b> <code>"
+msgstr "<b>Métriques calculées et ajoutées avec succès à :</b> <code>"
+
+msgid "<i>You can now use these variables in regressions or descriptive statistics.</i>"
+msgstr "<i>Vous pouvez maintenant utiliser ces variables dans des régressions ou des statistiques descriptives.</i>"
+
+msgid "4. Transition Rates Matrix"
+msgstr "4. Matrice des Taux de Transition"
+
+msgid "Transition Rates"
+msgstr "Taux de Transition"
+
+msgid "Calculates transition probabilities between states."
+msgstr "Calcule les probabilités de transition entre les états."
+
+msgid "Save Transition Matrix as"
+msgstr "Enregistrer la Matrice de Transition sous"
+
+msgid "<i>Probabilities of moving from state i (row) to state j (column).</i>"
+msgstr "<i>Probabilités de passer de l'état i (ligne) à l'état j (colonne).</i>"

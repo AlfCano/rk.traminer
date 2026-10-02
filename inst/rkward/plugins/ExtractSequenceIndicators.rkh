@@ -1,0 +1,47 @@
+<!DOCTYPE rkhelp >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<title>
+		Extract Sequence Indicators
+	</title>
+	<summary>
+	</summary>
+	<usage>
+	</usage>
+	<!--
+		<section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+			EDIT OR DELETE ME
+		</section>
+	-->
+	<settings>
+		<setting id="c3_seq">
+		</setting>
+		<setting id="c3_df">
+		</setting>
+		<caption id="frm_MtrcstEx" />
+		<setting id="c3_trans">
+		</setting>
+		<setting id="c3_ent">
+		</setting>
+		<setting id="c3_turb">
+		</setting>
+		<setting id="c3_comp">
+		</setting>
+		<setting id="c3_append">
+		</setting>
+	</settings>
+	<!--
+		<related>
+			<ul>
+				<li>
+					<link href="rkward://rhelp/..." />
+				</li>
+			</ul>
+		</related>
+	-->
+	<technical>
+	</technical>
+</document>

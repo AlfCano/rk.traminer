@@ -10,7 +10,7 @@ local({
     author = person(given = "Alfonso", family = "Cano", email = "alfonso.cano@correo.buap.mx", role = c("aut", "cre")),
     about = list(
       desc = "An RKWard GUI plugin for Sequence Analysis and Trajectory mining using TraMineR.",
-      version = "0.0.2", # ¡Actualizado a v0.0.2!
+      version = "0.0.3",
       url = "https://github.com/AlfCano/rk.traminer",
       license = "GPL (>= 3)"
     )
@@ -155,7 +155,7 @@ local({
   c2_vars <- rk.XML.varslot("Sequence Variables", source = "c2_sel", multi = TRUE, required = FALSE, id.name = "c2_vars")
   c2_covs <- rk.XML.varslot("Covariates for Profiling (e.g. sexo, migracion)", source = "c2_sel", multi = TRUE, id.name = "c2_covs")
 
-  c2_k <- rk.XML.spinbox("Number of clusters (k)", min = 2, max = 50, initial = 3, id.name = "c2_k")
+  c2_k <- rk.XML.spinbox("Number of clusters (k)", min = 2, max = 50, initial = 4, id.name = "c2_k")
   c2_name <- rk.XML.input("Save cluster factor as (column name)", initial = "cluster_tray", id.name = "c2_name")
   c2_append <- rk.XML.cbox("Append cluster factor to original dataframe", value = "1", chk = TRUE, id.name = "c2_append")
 
@@ -181,6 +181,11 @@ local({
   c2_helper_val <- rk.XML.input("Value / Pattern (No quotes needed)", id.name = "c2_helper_val")
   c2_helper_frame <- rk.XML.frame(rk.XML.col(c2_helper_mode, c2_helper_val), label = "Advanced Select", id.name = "c2_helper_frame")
 
+  c2_sm <- rk.XML.dropdown("Substitution Cost Method (sm)", options = list(
+      "Constant Cost (CONSTANT)" = list(val = "CONSTANT", chk = TRUE),
+      "Transition Rates (TRATE) - Data driven" = list(val = "TRATE")
+  ), id.name = "c2_sm")
+
   # UI Integration
    dialog_clust <- rk.XML.dialog(
       label = "Sequence Clustering & Typology",
@@ -198,6 +203,7 @@ local({
                   "Clustering Settings" = rk.XML.col(
                       rk.XML.text("<b>Method:</b> Optimal Matching (Constant Cost) to Ward Hierarchical Clustering"),
                       c2_k,
+                      c2_sm,
                       c2_name,
                       c2_append,
                       c2_plot_type,
@@ -211,10 +217,11 @@ local({
       )
   )
 
-  js_calc_clust <- paste0(js_parse_col, "
+js_calc_clust <- paste0(js_parse_col, "
     var df = getValue('c2_df');
     var raw_vars = getArrayCols(getValue('c2_vars'));
     var k = getValue('c2_k');
+    var sm = getValue('c2_sm');
     var cl_name = getValue('c2_name');
     var append = getValue('c2_append') == '1';
 
@@ -247,7 +254,8 @@ local({
         echo('tray_seq <- TraMineR::seqdef(datos_secuencia, left = \"DEL\", gaps = \"DEL\", right = \"DEL\")\\n\\n');
 
         echo('# 1. Optimal Matching Distance\\n');
-        echo('dist_matrix <- TraMineR::seqdist(tray_seq, method = \"OM\", indel = 1, sm = \"CONSTANT\")\\n\\n');
+        // ¡CORRECCIÓN AQUÍ! Se inyecta dinámicamente la variable sm ('TRATE' o 'CONSTANT')
+        echo('dist_matrix <- TraMineR::seqdist(tray_seq, method = \"OM\", indel = 1, sm = \"' + sm + '\")\\n\\n');
 
         echo('# 2. Wards Hierarchical Clustering\\n');
         echo('cluster_ward <- hclust(as.dist(dist_matrix), method = \"ward.D2\")\\n');
@@ -293,7 +301,6 @@ js_print_clust <- paste0(js_parse_col, "
     echo('try({\\n');
 
     if (plot_type === 'dist') {
-        // Para que RKWard guarde el objeto, debe llamarse 'cluster_plot' (como indica el initial del saveobj)
         echo('  cluster_plot <- ggseqplot::ggseqdplot(tray_seq, group = cluster_factor) + ggplot2::ggtitle(\"State Distribution by Cluster\")\\n');
         echo('  cluster_plot$plot_env <- emptyenv()\\n');
         echo('  print(cluster_plot)\\n');
@@ -301,25 +308,129 @@ js_print_clust <- paste0(js_parse_col, "
         echo('  plot(cluster_ward, labels = FALSE, main = \"Hierarchical Dendrogram (Ward)\", xlab = \"\", sub = \"\")\\n');
         echo('  rect.hclust(cluster_ward, k = ' + k + ', border = \"red\")\\n');
 
-        // Advertencia si intentan guardar un gráfico base
-        if(getValue('c2_save.active') && !is_preview) {
-            echo('  rk.print(\"<span style=\\'color:red;\\'>Note: Base R Dendrograms cannot be saved as plot objects.</span>\")\\n');
-        }
+        // TRUCO SALVAVIDAS: Creamos un objeto NULL para que RKWard no explote al intentar guardar el gráfico
+        echo('  cluster_plot <- NULL\\n');
     }
 
     echo('})\\n');
 
     if(!is_preview){
         echo('rk.graph.off()\\n');
+
+        // Imprimimos el mensaje rojo AFUERA del gráfico
+        if (plot_type !== 'dist' && getValue('c2_save.active')) {
+            echo('rk.print(\"<span style=\\'color:red;\\'>Note: Base R Dendrograms cannot be saved as plot objects. Save object set to NULL.</span>\")\\n');
+        }
     }
 
-    // EL BISTURÍ DE MEMORIA: Borramos los objetos masivos, pero DEJAMOS VIVOS a 'cluster_ward' y 'cluster_plot'
-    // para que la herramienta automática de RKWard los pueda atrapar y guardar en el GlobalEnv al final del script.
     echo('rm(list = intersect(ls(), c(\"datos_secuencia\", \"tray_seq\", \"dist_matrix\", \"cluster_factor\")))\\n');
     echo('gc()\\n');
   ")
 
   comp_clust <- rk.plugin.component("Sequence Clustering", xml = list(dialog = dialog_clust, logic = c2_logic), js = list(require = c("TraMineR", "dplyr", "ggseqplot", "cluster"), calculate = js_calc_clust, printout = js_print_clust), hierarchy = h_seq)
+
+# =========================================================================================
+  # COMPONENT 3: Extract Sequence Indicators
+  # =========================================================================================
+  help_c3 <- rk.rkh.doc(title = rk.rkh.title("Sequence Indicators"), summary = rk.rkh.summary("Calculates complexity, entropy, and turbulence and appends them to the dataframe."))
+
+  c3_sel <- rk.XML.varselector(id.name = "c3_sel")
+  c3_seq <- rk.XML.varslot("Sequence Object (seqdef)", source = "c3_sel", required = TRUE, id.name = "c3_seq")
+  c3_df  <- rk.XML.varslot("Original Dataframe (To append metrics)", source = "c3_sel", classes = "data.frame", required = TRUE, id.name = "c3_df")
+
+  c3_logic <- rk.XML.logic(rk.XML.connect(governor = c3_df, get = "available", client = c3_sel, set = "root"))
+
+  c3_trans <- rk.XML.cbox("Number of Transitions (seqtransn)", value = "1", chk = TRUE, id.name = "c3_trans")
+  c3_ent <- rk.XML.cbox("Longitudinal Entropy (seqient)", value = "1", chk = TRUE, id.name = "c3_ent")
+  c3_turb <- rk.XML.cbox("Turbulence (seqST)", value = "1", chk = TRUE, id.name = "c3_turb")
+  c3_comp <- rk.XML.cbox("Complexity Index (seqici)", value = "1", chk = TRUE, id.name = "c3_comp")
+
+  c3_append <- rk.XML.cbox("Append selected metrics to Original Dataframe", value = "1", chk = TRUE, id.name = "c3_append")
+
+  dialog_c3 <- rk.XML.dialog(label = "Extract Sequence Indicators", child = rk.XML.row(
+      c3_sel,
+      rk.XML.col(
+          c3_seq, c3_df,
+          # FIX: Se agregó explícitamente 'label =' para evitar el error de XiMpLe
+          rk.XML.frame(c3_trans, c3_ent, c3_turb, c3_comp, label = "Metrics to Extract"),
+          c3_append,
+          rk.XML.stretch()
+      )
+  ))
+
+  js_calc_c3 <- "
+    var seq = getValue('c3_seq');
+    var df = getValue('c3_df');
+    var append = getValue('c3_append') == '1';
+
+    if(seq !== '' && df !== '') {
+        // Validación de seguridad
+        echo('if (nrow(' + df + ') == nrow(' + seq + ')) {\\n');
+
+        if(getValue('c3_trans') == '1') echo('  ' + df + '$seq_trans <- as.numeric(TraMineR::seqtransn(' + seq + ')[,1])\\n');
+        if(getValue('c3_ent') == '1')   echo('  ' + df + '$seq_entropy <- as.numeric(TraMineR::seqient(' + seq + ')[,1])\\n');
+        if(getValue('c3_turb') == '1')  echo('  ' + df + '$seq_turb <- as.numeric(TraMineR::seqST(' + seq + ')[,1])\\n');
+        if(getValue('c3_comp') == '1')  echo('  ' + df + '$seq_complex <- as.numeric(TraMineR::seqici(' + seq + ')[,1])\\n');
+
+        if(append && !is_preview) {
+            echo('  assign(\"' + df + '\", ' + df + ', envir = .GlobalEnv)\\n');
+        }
+
+        echo('} else {\\n');
+        echo('  stop(\"Error: The Sequence Object and the Dataframe do not have the same number of rows.\")\\n');
+        echo('}\\n');
+    }
+  "
+
+  js_print_c3 <- "
+    if(!is_preview) {
+        echo('rk.header(\"Sequence Indicators Extracted\")\\n');
+        echo('rk.print(\"<b>Metrics successfully calculated and appended to:</b> <code>' + getValue('c3_df') + '</code>\")\\n');
+        echo('rk.print(\"<i>You can now use these variables in regressions or descriptive statistics.</i>\")\\n');
+    }
+  "
+
+  comp_c3 <- rk.plugin.component("Extract Sequence Indicators", xml=list(dialog=dialog_c3, logic=c3_logic), js=list(require="TraMineR", calculate=js_calc_c3, printout=js_print_c3), hierarchy=h_seq, rkh=list(help=help_c3))
+
+# =========================================================================================
+  # COMPONENT 4: Transition Rates
+  # =========================================================================================
+  help_c4 <- rk.rkh.doc(title = rk.rkh.title("Transition Rates Matrix"), summary = rk.rkh.summary("Calculates transition probabilities between states."))
+
+  c4_sel <- rk.XML.varselector(id.name = "c4_sel")
+  c4_seq <- rk.XML.varslot("Sequence Object (seqdef)", source = "c4_sel", required = TRUE, id.name = "c4_seq")
+
+  c4_save <- rk.XML.saveobj("Save Transition Matrix as", initial="trans_matrix", chk=TRUE, id.name="c4_save")
+
+  dialog_c4 <- rk.XML.dialog(label="Transition Rates Matrix", child=rk.XML.row(
+      c4_sel, rk.XML.col(c4_seq, c4_save, rk.XML.stretch())
+  ))
+
+  js_calc_c4 <- "
+    var seq = getValue('c4_seq');
+    if(seq !== '') {
+        // Regla 3: El objeto de R se llama exactamente como el 'initial'
+        echo('trans_matrix <- TraMineR::seqtrate(' + seq + ')\\n');
+    }
+  "
+
+  js_print_c4 <- "
+    if(!is_preview) {
+        echo('rk.header(\"Transition Rates Matrix\")\\n');
+        echo('rk.print(\"<i>Probabilities of moving from state i (row) to state j (column).</i>\")\\n');
+
+        // BUG FIX: Convert TraMineR matrix to a standard data.frame
+        // This prevents rk.results() from crashing due to missing dimension titles.
+        echo('print_mat <- as.data.frame(round(trans_matrix, 4))\\n');
+        echo('rk.results(print_mat)\\n');
+
+        // Clean up the temporary printing object
+        echo('rm(print_mat)\\n');
+    }
+  "
+
+  comp_c4 <- rk.plugin.component("Transition Rates", xml=list(dialog=dialog_c4), js=list(require="TraMineR", calculate=js_calc_c4, printout=js_print_c4), hierarchy=h_seq, rkh=list(help=help_c4))
+
 
 # =========================================================================================
   # 3. BUILD SKELETON (Corregido: 2 Plug-ins exactos)
@@ -347,10 +458,10 @@ js_print_clust <- paste0(js_parse_col, "
     js = list(require = c("TraMineR", "dplyr", "ggseqplot", "patchwork"), calculate = js_calc_dash, printout = js_print_dash),
     rkh = list(help = help_dash),
     pluginmap = list(name = "Sequence Dashboard", hierarchy = h_seq),
-    components = list(comp_clust),
+    components = list(comp_clust, comp_c3, comp_c4),
     create = c("pmap", "xml", "js", "desc", "rkh"),
     load = TRUE, overwrite = TRUE, show = FALSE
   )
 
-  cat("\nPlugin package 'rk.traminer' (v0.0.2) generated successfully.\n")
+  cat("\nPlugin package 'rk.traminer' (v0.0.3) generated successfully.\n")
 })

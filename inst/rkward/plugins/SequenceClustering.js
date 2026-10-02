@@ -58,6 +58,7 @@ function calculate(is_preview){
     var df = getValue('c2_df');
     var raw_vars = getArrayCols(getValue('c2_vars'));
     var k = getValue('c2_k');
+    var sm = getValue('c2_sm');
     var cl_name = getValue('c2_name');
     var append = getValue('c2_append') == '1';
 
@@ -90,7 +91,8 @@ function calculate(is_preview){
         echo('tray_seq <- TraMineR::seqdef(datos_secuencia, left = "DEL", gaps = "DEL", right = "DEL")\n\n');
 
         echo('# 1. Optimal Matching Distance\n');
-        echo('dist_matrix <- TraMineR::seqdist(tray_seq, method = "OM", indel = 1, sm = "CONSTANT")\n\n');
+        // ¡CORRECCIÓN AQUÍ! Se inyecta dinámicamente la variable sm ('TRATE' o 'CONSTANT')
+        echo('dist_matrix <- TraMineR::seqdist(tray_seq, method = "OM", indel = 1, sm = "' + sm + '")\n\n');
 
         echo('# 2. Wards Hierarchical Clustering\n');
         echo('cluster_ward <- hclust(as.dist(dist_matrix), method = "ward.D2")\n');
@@ -165,7 +167,6 @@ function printout(is_preview){
     echo('try({\n');
 
     if (plot_type === 'dist') {
-        // Para que RKWard guarde el objeto, debe llamarse 'cluster_plot' (como indica el initial del saveobj)
         echo('  cluster_plot <- ggseqplot::ggseqdplot(tray_seq, group = cluster_factor) + ggplot2::ggtitle("State Distribution by Cluster")\n');
         echo('  cluster_plot$plot_env <- emptyenv()\n');
         echo('  print(cluster_plot)\n');
@@ -173,20 +174,21 @@ function printout(is_preview){
         echo('  plot(cluster_ward, labels = FALSE, main = "Hierarchical Dendrogram (Ward)", xlab = "", sub = "")\n');
         echo('  rect.hclust(cluster_ward, k = ' + k + ', border = "red")\n');
 
-        // Advertencia si intentan guardar un gráfico base
-        if(getValue('c2_save.active') && !is_preview) {
-            echo('  rk.print("<span style=\'color:red;\'>Note: Base R Dendrograms cannot be saved as plot objects.</span>")\n');
-        }
+        // TRUCO SALVAVIDAS: Creamos un objeto NULL para que RKWard no explote al intentar guardar el gráfico
+        echo('  cluster_plot <- NULL\n');
     }
 
     echo('})\n');
 
     if(!is_preview){
         echo('rk.graph.off()\n');
+
+        // Imprimimos el mensaje rojo AFUERA del gráfico
+        if (plot_type !== 'dist' && getValue('c2_save.active')) {
+            echo('rk.print("<span style=\'color:red;\'>Note: Base R Dendrograms cannot be saved as plot objects. Save object set to NULL.</span>")\n');
+        }
     }
 
-    // EL BISTURÍ DE MEMORIA: Borramos los objetos masivos, pero DEJAMOS VIVOS a 'cluster_ward' y 'cluster_plot'
-    // para que la herramienta automática de RKWard los pueda atrapar y guardar en el GlobalEnv al final del script.
     echo('rm(list = intersect(ls(), c("datos_secuencia", "tray_seq", "dist_matrix", "cluster_factor")))\n');
     echo('gc()\n');
   

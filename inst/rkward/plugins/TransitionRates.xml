@@ -1,0 +1,31 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="TransitionRates.js" />
+	<help file="TransitionRates.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Transition Rates Matrix">
+		<row id="row_v44SO4STM4">
+			<varselector id="c4_sel" />
+			<column id="clm_vr4SO4STM4">
+				<varslot id="c4_seq" label="Sequence Object (seqdef)" source="c4_sel" required="true" />
+				<saveobject label="Save Transition Matrix as" checkable="true" checked="true" initial="trans_matrix" id="c4_save" />
+				<stretch />
+			</column>
+		</row>
+	</dialog>
+</document>

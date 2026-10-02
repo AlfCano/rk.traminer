@@ -1,0 +1,33 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="ExtractSequenceIndicators.js" />
+	<help file="ExtractSequenceIndicators.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<connect governor="c3_df.available" client="c3_sel.root" />
+	</logic>
+	<dialog label="Extract Sequence Indicators">
+		<row id="row_v33SO33ODT">
+			<varselector id="c3_sel" />
+			<column id="clm_v3SO33ODT3">
+				<varslot id="c3_seq" label="Sequence Object (seqdef)" source="c3_sel" required="true" />
+				<varslot id="c3_df" label="Original Dataframe (To append metrics)" source="c3_sel" classes="data.frame" required="true" />
+				<frame label="Metrics to Extract" id="frm_MtrcstEx">
+					<checkbox id="c3_trans" label="Number of Transitions (seqtransn)" value="1" checked="true" />
+					<checkbox id="c3_ent" label="Longitudinal Entropy (seqient)" value="1" checked="true" />
+					<checkbox id="c3_turb" label="Turbulence (seqST)" value="1" checked="true" />
+					<checkbox id="c3_comp" label="Complexity Index (seqici)" value="1" checked="true" />
+				</frame>
+				<checkbox id="c3_append" label="Append selected metrics to Original Dataframe" value="1" checked="true" />
+				<stretch />
+			</column>
+		</row>
+	</dialog>
+</document>

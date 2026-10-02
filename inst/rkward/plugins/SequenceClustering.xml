@@ -51,7 +51,11 @@
 								</b>
 								Optimal Matching (Constant Cost) to Ward Hierarchical Clustering
 							</text>
-							<spinbox label="Number of clusters (k)" id="c2_k" initial="3" min="2" max="50" />
+							<spinbox label="Number of clusters (k)" id="c2_k" initial="4" min="2" max="50" />
+							<dropdown id="c2_sm" label="Substitution Cost Method (sm)">
+								<option label="Constant Cost (CONSTANT)" value="CONSTANT" checked="true" />
+								<option label="Transition Rates (TRATE) - Data driven" value="TRATE" />
+							</dropdown>
 							<input label="Name for new Cluster column" id="c2_name" initial="cluster_tray" required="true" />
 							<checkbox id="c2_append" label="Append cluster column to original Dataframe" value="1" checked="true" />
 							<radio id="c2_plot_type" label="Plot Type">

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rk.traminer 0.0.2\n"
+"Project-Id-Version: rk.traminer 0.0.3\n"
 "Report-Msgid-Bugs-To: alfonso.cano@correo.buap.mx\n"
 "POT-Creation-Date: 2026-09-19 20:18-0600\n"
 "PO-Revision-Date: 2026-09-19 20:18-0600\n"
@@ -124,4 +124,76 @@ msgstr "<b>Kovariate:</b>"
 
 msgid "<span style='color:red;'>Note: Base R Dendrograms cannot be saved as plot objects.</span>"
 msgstr "<span style='color:red;'>Hinweis: Base R Dendrogramme können nicht als Grafikobjekte gespeichert werden.</span>"
-s
+
+# =========================================================
+# MODIFICACIONES C2 / COMPONENTES 3 Y 4
+# =========================================================
+msgid "Substitution Cost Method (sm)"
+msgstr "Substitutionskosten-Methode (sm)"
+
+msgid "Constant Cost (CONSTANT)"
+msgstr "Konstante Kosten (CONSTANT)"
+
+msgid "Transition Rates (TRATE) - Data driven"
+msgstr "Übergangsraten (TRATE) - Datenbasiert"
+
+msgid "<span style='color:red;'>Note: Base R Dendrograms cannot be saved as plot objects. Save object set to NULL.</span>"
+msgstr "<span style='color:red;'>Hinweis: Base R Dendrogramme können nicht gespeichert werden. Objekt auf NULL gesetzt.</span>"
+
+msgid "3. Sequence Indicators"
+msgstr "3. Sequenzindikatoren"
+
+msgid "Extract Sequence Indicators"
+msgstr "Sequenzindikatoren extrahieren"
+
+msgid "Calculates complexity, entropy, and turbulence and appends them to the dataframe."
+msgstr "Berechnet Komplexität, Entropie und Turbulenz und fügt sie dem Dataframe hinzu."
+
+msgid "Sequence Object (seqdef)"
+msgstr "Sequenzobjekt (seqdef)"
+
+msgid "Original Dataframe (To append metrics)"
+msgstr "Ursprüngliches Dataframe (Um Metriken hinzuzufügen)"
+
+msgid "Metrics to Extract"
+msgstr "Zu extrahierende Metriken"
+
+msgid "Number of Transitions (seqtransn)"
+msgstr "Anzahl der Übergänge (seqtransn)"
+
+msgid "Longitudinal Entropy (seqient)"
+msgstr "Longitudinale Entropie (seqient)"
+
+msgid "Turbulence (seqST)"
+msgstr "Turbulenz (seqST)"
+
+msgid "Complexity Index (seqici)"
+msgstr "Komplexitätsindex (seqici)"
+
+msgid "Append selected metrics to Original Dataframe"
+msgstr "Ausgewählte Metriken an ursprüngliches Dataframe anhängen"
+
+msgid "Sequence Indicators Extracted"
+msgstr "Sequenzindikatoren extrahiert"
+
+msgid "<b>Metrics successfully calculated and appended to:</b> <code>"
+msgstr "<b>Metriken erfolgreich berechnet und hinzugefügt zu:</b> <code>"
+
+msgid "<i>You can now use these variables in regressions or descriptive statistics.</i>"
+msgstr "<i>Sie können diese Variablen nun in Regressionen oder deskriptiven Statistiken verwenden.</i>"
+
+msgid "4. Transition Rates Matrix"
+msgstr "4. Übergangsraten-Matrix"
+
+msgid "Transition Rates"
+msgstr "Übergangsraten"
+
+msgid "Calculates transition probabilities between states."
+msgstr "Berechnet die Übergangswahrscheinlichkeiten zwischen Zuständen."
+
+msgid "Save Transition Matrix as"
+msgstr "Übergangsmatrix speichern unter"
+
+msgid "<i>Probabilities of moving from state i (row) to state j (column).</i>"
+msgstr "<i>Wahrscheinlichkeit des Wechsels von Zustand i (Zeile) zu Zustand j (Spalte).</i>"
+

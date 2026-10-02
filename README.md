@@ -1,11 +1,21 @@
 # rk.traminer: Sequence Analysis & Trajectory Mining for RKWard
 
-![Version](https://img.shields.io/badge/Version-0.0.2-blue.svg)
+![Version](https://img.shields.io/badge/Version-0.0.3-blue.svg)
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![RKWard](https://img.shields.io/badge/Platform-RKWard-green)
 [![R Linter](https://github.com/AlfCano/rk.traminer/actions/workflows/lintr.yml/badge.svg)](https://github.com/AlfCano/rk.traminer/actions/workflows/lintr.yml)
 
-**rk.traminer** brings the power of Sequence Analysis (Life-course trajectories) to the RKWard GUI. It provides a highly optimized, user-friendly interface for the gold-standard [`TraMineR`](http://traminer.unige.ch/) package. By integrating [`ggseqplot`](https://maraab23.github.io/ggseqplot/) and `patchwork`, it completely modernizes the visual output, allowing researchers in sociology, demography, and economics to easily construct state sequence objects and render stunning, publication-ready dashboards.
+**rk.traminer** brings the power of Sequence Analysis (Life-course trajectories) to the RKWard GUI. It provides a highly optimized, user-friendly interface for the gold-standard [`TraMineR`](http://traminer.unige.ch/) package. By integrating [`ggseqplot`](https://maraab23.github.io/ggseqplot/) and `patchwork`, it completely modernizes the visual output, allowing researchers in sociology, demography, and economics to easily construct state sequence objects and render stunning, publication-ready dashboards and complexity analysis.
+
+---
+
+## 🚀 What's New in Version 0.0.3
+
+**🧠 Analytical Power & Data-Driven Costs**
+
+*   **Extract Complexity Metrics:** A new module to calculate longitudinal indicators (Turbulence, Entropy, Transitions, Complexity Index) and automatically append them as numeric columns to your dataframe for regression analysis.
+*   **Transition Matrices:** Calculate Markov-chain transition probabilities (`seqtrate`) to analyze state-to-state movements.
+*   **Data-Driven Clustering:** The Clustering component now supports Data-Driven Transition Rates (`TRATE`) as the Substitution Cost Method, ensuring highly accurate Optimal Matching (OM) distances.
 
 ## 🚀 What's New in Version 0.0.2
 
@@ -25,18 +35,30 @@
 *   **Tidyselect Integration:** Interactive `dplyr` tidyselect assistant. Users can choose `starts_with()`, `ends_with()`, `contains()`, or `matches()` from a dropdown menu. The plugin automatically generates the correct syntax and handles string quoting, drastically lowering the barrier to entry for beginners while keeping a "Custom" option for advanced R users.
 *   **UI Logic Polish:** The assistant's text box uses RKWard XML logic to dynamically appear or hide based on the user's selection, keeping the interface clean and preventing syntax errors.
 
+---
+
 ## ✨ Features
 
-### 1. Smart Sequence Definition
-*   **Missing Data Mastery:** Real-world longitudinal data is full of gaps. Easily define how to handle missing data *before* the sequence starts (`left`), *during* the sequence (`gaps`), and *after* the sequence ends (`right`). Choose to delete/ignore gaps (`"DEL"`) to align trajectories of different lengths, or treat them as missing information (`"NA"`).
-*   **Tidy Variable Parsing:** Safely parses columns using `dplyr` backends, automatically wrapping variable names in backticks to prevent syntax errors when handling special characters.
+### 1. Smart Sequence Definition & Dashboard
+*   **Tidy Variable Selection:** Easily select dozens of chronological states without manual clicking using the built-in `tidyselect` assistant (e.g., `starts_with("job_")`).
+*   **Missing Data Mastery:** Natively handle left, internal (`gaps`), and right missing data. Choose to delete/ignore gaps (`"DEL"`) to align trajectories of different lengths, or treat them as missing information (`"NA"`).
+*   **Modern Visual Dashboard:** Generates a unified, `patchwork`-assembled grid of `ggseqplot` charts (State Distribution, Frequencies, Index, and Mean Time plots) optimized for RKWard's live Preview.
 
-### 2. Multi-Plot Visual Dashboard
-Select any combination of the following foundational Sequence Analysis plots. The plugin will automatically stitch them together into a single dashboard:
-*   **State Distribution Plot:** Visualizes the cross-sectional state frequencies at each time point (`seqdplot`).
-*   **Sequence Frequency Plot:** Displays the "Top 10" most common exact trajectories in your dataset (`seqfplot`).
-*   **Sequence Index Plot:** Draws individual horizontal lines for each subject, dynamically sorted from their starting state (`seqIplot`).
-*   **Mean Time Plot:** Shows the average number of events/time spent by subjects in each state (`seqmtplot`).
+### 2. Sequence Clustering & Typologies
+*   **Optimal Matching (OM):** Group similar life trajectories using Ward's Hierarchical Clustering with Constant (`CONSTANT`) or Data-driven (`TRATE`) substitution costs.
+*   **Automated Profiling:** Select covariates (e.g., gender, age, income) to instantly generate HTML cross-tabulations profiling your newly discovered trajectory clusters.
+*   **Dual Visual Diagnostics:** Toggle between a classic **Hierarchical Dendrogram** to visually justify your chosen number of clusters ($k$), or a modern faceted **State Distribution Plot**.
+*   **Seamless Integration:** Automatically append the resulting cluster assignments back to your original dataframe as a new factor variable.
+
+### 3. Extract Sequence Indicators
+*   **Quantify Life-Courses:** Calculate individual longitudinal metrics to measure how chaotic or stable a trajectory is, including **Turbulence (`seqST`)**, **Longitudinal Entropy (`seqient`)**, and **Complexity Index (`seqici`)**.
+*   **Ready for Modeling:** These metrics are perfectly extracted as continuous numeric vectors and safely appended to your dataset, making them instantly available for ANOVA or Logistic Regressions.
+
+### 4. Transition Rates Matrix
+*   **Markov Probabilities:** Calculate the exact mathematical probability of moving from State A (row) to State B (column) in the next consecutive time period.
+*   **Clean Reporting:** The matrix is converted and printed as a clean, presentation-ready HTML table, while saving the raw matrix to your Global Environment for downstream Network Analysis mapping.
+
+---
 
 ### 🛡️ Universal Features
 *   **Live Preview:** Instantly preview your full trajectory dashboard before processing the final object.
@@ -47,6 +69,8 @@ Select any combination of the following foundational Sequence Analysis plots. Th
     *   🇫🇷 French (`fr`)
     *   🇩🇪 German (`de`)
     *   🇧🇷 Portuguese (Brazil) (`pt_BR`)
+    
+---
 
 ## 📦 Installation
 
@@ -66,6 +90,8 @@ This plugin is not yet on CRAN. To install it, use the `remotes` or `devtools` p
     ```
 3.  **Restart RKWard** to load the new menu entries.
 
+---
+
 ## 💻 Usage
 
 Once installed, the tool is organized under the **Plots** menu:
@@ -77,6 +103,8 @@ Once installed, the tool is organized under the **Plots** menu:
 3. Set your gap-handling rules.
 4. Check the plots you want to render and click **Submit**.
 
+---
+
 ## 🛠️ Dependencies
 
 This plugin relies on the following R packages:
@@ -86,19 +114,22 @@ This plugin relies on the following R packages:
 *   `dplyr` (Variable selection)
 *   `rkwarddev` (Plugin generation)
 
-#### Troubleshooting: Errors installing `devtools` or missing binary dependencies (Windows)
+---
 
-If you encounter errors mentioning "non-zero exit status", "namespace is already loaded", or requirements for compilation (compiling from source) when installing packages, it is likely because the R version bundled with RKWard is older than the current CRAN standard.
+#### Troubleshooting: Compilation errors or missing binary dependencies (Windows)
 
-**Workaround:**
-Until a new, more recent version of R (current bundled version is 4.3.3) is packaged into the RKWard executable, these issues will persist. To fix this:
+If you encounter errors mentioning "non-zero exit status", "namespace is already loaded", or prompts asking you to compile packages from source (which subsequently fail), this typically happens when the R version bundled with your RKWard Windows installer is slightly behind the current CRAN standard.
 
-1.  Download and install the latest version of R (e.g., 4.5.2 or newer) from [CRAN](https://cloud.r-project.org/).
-2.  Open RKWard and go to the **Settings** (or Preferences) menu.
-3.  Run the **"Installation Checker"**.
-4.  Point RKWard to the newly installed R version.
+CRAN provides easy-to-install, pre-compiled binaries primarily for the latest R versions. To bypass the need for manual compilation and RTools:
 
-This "two-step" setup (similar to how RStudio operates) ensures you have access to the latest pre-compiled binaries, avoiding the need for RTools and manual compilation.
+1.  **Update R:** Download and install the latest stable version of R directly from [CRAN](https://cloud.r-project.org/).
+2.  **Link to RKWard:** Open RKWard, navigate to the **Settings** (or Preferences) menu, and run the **"Installation Checker"**.
+3.  **Switch the Engine:** Point RKWard to the newly installed R executable (e.g., `C:\Program Files\R\R-4.x.x`).
+
+This standard "two-step" setup (updating R independently of RKWard) guarantees you always have access to the latest pre-compiled binaries, keeping your plugin installations smooth and error-free.
+
+
+---
 
 ## ✍️ Author & License
 
