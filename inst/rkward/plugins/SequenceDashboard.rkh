@@ -38,13 +38,38 @@
 		<setting id="c1_right">
 		</setting>
 		<caption id="tab_DshbrdPl" />
+		<caption id="frm_c1SDPTRUET" />
 		<setting id="c1_p_dist">
 		</setting>
-		<setting id="c1_p_freq">
+		<setting id="c1_t_dist">
 		</setting>
+		<setting id="c1_y_dist">
+		</setting>
+		<caption id="frm_c1SIPTRUET" />
 		<setting id="c1_p_idx">
 		</setting>
+		<setting id="c1_t_idx">
+		</setting>
+		<setting id="c1_y_idx">
+		</setting>
+		<caption id="frm_c1SFPTRUET" />
+		<setting id="c1_p_freq">
+		</setting>
+		<setting id="c1_t_freq">
+		</setting>
+		<setting id="c1_y_freq">
+		</setting>
+		<caption id="frm_c1MTPTRUET" />
 		<setting id="c1_p_time">
+		</setting>
+		<setting id="c1_t_time">
+		</setting>
+		<setting id="c1_y_time">
+		</setting>
+		<caption id="frm_GlblAppr" />
+		<setting id="c1_uni_leg">
+		</setting>
+		<setting id="c1_x_angle">
 		</setting>
 		<caption id="tab_Output" />
 		<caption id="frm_GrphcsDv" />

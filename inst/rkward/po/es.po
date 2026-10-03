@@ -1,16 +1,15 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rk.traminer 0.0.3\n"
+"Project-Id-Version: rk.traminer 0.0.4\n"
 "Report-Msgid-Bugs-To: alfonso.cano@correo.buap.mx\n"
-"POT-Creation-Date: 2026-09-19 20:18-0600\n"
-"PO-Revision-Date: 2026-09-19 20:18-0600\n"
+"POT-Creation-Date: 2026-10-03 11:34-0600\n"
+"PO-Revision-Date: 2026-10-03 11:34-0600\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
 
 msgid "Sequence Analysis Dashboard"
 msgstr "Panel de Control de Análisis de Secuencias"
@@ -81,9 +80,6 @@ msgstr "Personalizado (Expresión tidyselect pura)"
 msgid "Value / Pattern (No quotes needed for prefix/suffix)"
 msgstr "Valor / Patrón (No necesita comillas para prefijo/sufijo)"
 
-# =========================================================
-# COMPONENTE 2: Sequence Clustering
-# =========================================================
 msgid "Sequence Clustering"
 msgstr "Clustering de Secuencias"
 
@@ -126,12 +122,9 @@ msgstr "Tabulación Cruzada: Covariables por Clúster"
 msgid "<b>Covariate:</b>"
 msgstr "<b>Covariable:</b>"
 
-msgid "<span style='color:red;'>Note: Base R Dendrograms cannot be saved as plot objects.</span>"
-msgstr "<span style='color:red;'>Nota: Los Dendrogramas de R Base no se pueden guardar como objetos gráficos.</span>"
+msgid "<span style='color:red;'>Note: Base R Dendrograms cannot be saved as plot objects. Save object set to NULL.</span>"
+msgstr "<span style='color:red;'>Nota: Los Dendrogramas de R Base no pueden guardarse como objetos gráficos. Se asignó NULL.</span>"
 
-# =========================================================
-# MODIFICACIONES C2 / COMPONENTES 3 Y 4
-# =========================================================
 msgid "Substitution Cost Method (sm)"
 msgstr "Método de Costo de Sustitución (sm)"
 
@@ -140,9 +133,6 @@ msgstr "Costo Constante (CONSTANT)"
 
 msgid "Transition Rates (TRATE) - Data driven"
 msgstr "Tasas de Transición (TRATE) - Basado en datos"
-
-msgid "<span style='color:red;'>Note: Base R Dendrograms cannot be saved as plot objects. Save object set to NULL.</span>"
-msgstr "<span style='color:red;'>Nota: Los Dendrogramas de R Base no pueden guardarse como objetos gráficos. Se asignó NULL.</span>"
 
 msgid "3. Sequence Indicators"
 msgstr "3. Indicadores de Secuencia"
@@ -200,3 +190,24 @@ msgstr "Guardar Matriz de Transición como"
 
 msgid "<i>Probabilities of moving from state i (row) to state j (column).</i>"
 msgstr "<i>Probabilidades de pasar del estado i (fila) al estado j (columna).</i>"
+
+msgid "Title:"
+msgstr "Título:"
+
+msgid "Y-axis (blank for auto):"
+msgstr "Eje Y (blanco para auto):"
+
+msgid "Global Appearance"
+msgstr "Apariencia Global"
+
+msgid "Plot Appearance"
+msgstr "Apariencia del Gráfico"
+
+msgid "Unify legend at bottom (plot_layout guides = 'collect')"
+msgstr "Unificar leyenda en la parte inferior (plot_layout guides = 'collect')"
+
+msgid "Move legend to bottom"
+msgstr "Mover leyenda a la parte inferior"
+
+msgid "X-axis text angle (degrees)"
+msgstr "Ángulo del texto en el eje X (grados)"

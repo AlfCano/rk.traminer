@@ -38,6 +38,15 @@
 		</setting>
 		<setting id="c2_plot_type">
 		</setting>
+		<caption id="c2_appear_frame" />
+		<setting id="c2_t_dist">
+		</setting>
+		<setting id="c2_y_label">
+		</setting>
+		<setting id="c2_uni_leg">
+		</setting>
+		<setting id="c2_x_angle">
+		</setting>
 		<setting id="c2_save_model">
 		</setting>
 		<caption id="tab_Output" />

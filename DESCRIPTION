@@ -2,8 +2,8 @@ Package: rk.traminer
 Type: Package
 Title: An RKWard GUI plugin for Sequence Analysis and Trajectory mining
         using TraMineR.
-Version: 0.0.3
-Date: 2026-10-02
+Version: 0.0.4
+Date: 2026-10-03
 Author: Alfonso Cano
 Maintainer: Alfonso Cano <alfonso.cano@correo.buap.mx>
 Enhances: rkward

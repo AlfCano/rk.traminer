@@ -10,7 +10,7 @@ local({
     author = person(given = "Alfonso", family = "Cano", email = "alfonso.cano@correo.buap.mx", role = c("aut", "cre")),
     about = list(
       desc = "An RKWard GUI plugin for Sequence Analysis and Trajectory mining using TraMineR.",
-      version = "0.0.3",
+      version = "0.0.4",
       url = "https://github.com/AlfCano/rk.traminer",
       license = "GPL (>= 3)"
     )
@@ -21,6 +21,13 @@ local({
   # =========================================================================================
   # 2. UI Helpers (JS Parser and Device Tab Generator)
   # =========================================================================================
+
+    js_sanitize_input <- "
+    function cleanStr(val) {
+        if(!val) return '';
+        return val.replace(/'/g, \"\\\\'\").replace(/\"/g, '\\\\\"').replace(/\\n/g, '\\\\n');
+    }
+  "
   js_parse_col <- "
     function getRawCol(fullPath) {
         if (!fullPath) return '';
@@ -80,17 +87,71 @@ local({
   c1_left  <- rk.XML.dropdown("Left gaps", options = list("DEL" = list(val = "DEL", chk = TRUE), "NA" = list(val = "NA")), id.name = "c1_left")
   c1_void  <- rk.XML.dropdown("Void gaps", options = list("DEL" = list(val = "DEL", chk = TRUE), "NA" = list(val = "NA")), id.name = "c1_void")
   c1_right <- rk.XML.dropdown("Right gaps", options = list("DEL" = list(val = "DEL", chk = TRUE), "NA" = list(val = "NA")), id.name = "c1_right")
-  c1_p_dist  <- rk.XML.cbox("State Distribution Plot", value = "TRUE", chk = TRUE, id.name = "c1_p_dist")
-  c1_p_freq  <- rk.XML.cbox("Sequence Frequency Plot", value = "TRUE", chk = TRUE, id.name = "c1_p_freq")
-  c1_p_idx   <- rk.XML.cbox("Sequence Index Plot", value = "TRUE", chk = TRUE, id.name = "c1_p_idx")
-  c1_p_time  <- rk.XML.cbox("Mean Time Plot", value = "TRUE", chk = TRUE, id.name = "c1_p_time")
 
-  dialog_dash <- rk.XML.dialog(label = "Sequence Analysis Dashboard", child = rk.XML.row(c1_sel, rk.XML.col(c1_df, rk.XML.tabbook(tabs = list(
-      "Data & Variables" = rk.XML.col(c1_vars, c1_helper_frame, rk.XML.frame(c1_id, label="Metadata"), rk.XML.stretch()),
-      "Missing Data Handling" = rk.XML.col(c1_left, c1_void, c1_right, rk.XML.stretch()),
-      "Dashboard Plots" = rk.XML.col(c1_p_dist, c1_p_freq, c1_p_idx, c1_p_time, rk.XML.stretch()),
-      "Output" = make_device_tab(prefix = "c1", initial_save = "tray_seq", show_save = TRUE)
-  )))))
+  # --- Pestaña 3: Dashboard Plots (Títulos y Opciones) ---
+ # --- Pestaña 3: Dashboard Plots (Títulos y Opciones) ---
+  c1_p_dist  <- rk.XML.cbox("State Distribution Plot", value = "TRUE", chk = TRUE, id.name = "c1_p_dist")
+  c1_t_dist  <- rk.XML.input("Title:", initial = "State Distribution", id.name = "c1_t_dist")
+  c1_y_dist  <- rk.XML.input("Y-axis (blank for auto):", id.name = "c1_y_dist")
+
+  c1_p_freq  <- rk.XML.cbox("Sequence Frequency Plot", value = "TRUE", chk = TRUE, id.name = "c1_p_freq")
+  c1_t_freq  <- rk.XML.input("Title:", initial = "Most Frequent Sequences", id.name = "c1_t_freq")
+  c1_y_freq  <- rk.XML.input("Y-axis (blank for auto):", id.name = "c1_y_freq")
+
+  c1_p_idx   <- rk.XML.cbox("Sequence Index Plot", value = "TRUE", chk = TRUE, id.name = "c1_p_idx")
+  c1_t_idx   <- rk.XML.input("Title:", initial = "Individual Trajectories", id.name = "c1_t_idx")
+  c1_y_idx   <- rk.XML.input("Y-axis (blank for auto):", id.name = "c1_y_idx")
+
+  c1_p_time  <- rk.XML.cbox("Mean Time Plot", value = "TRUE", chk = TRUE, id.name = "c1_p_time")
+  c1_t_time  <- rk.XML.input("Title:", initial = "Mean Time in States", id.name = "c1_t_time")
+  c1_y_time  <- rk.XML.input("Y-axis (blank for auto):", id.name = "c1_y_time")
+
+  # --- Opciones Globales de Apariencia ---
+  c1_uni_leg <- rk.XML.cbox("Unify legend at bottom (plot_layout guides = 'collect')", value = "TRUE", chk = TRUE, id.name = "c1_uni_leg")
+  c1_x_angle <- rk.XML.spinbox("X-axis text angle (degrees)", min = 0, max = 90, initial = 0, id.name = "c1_x_angle")
+
+  # Lógica extra: Habilitar/Deshabilitar títulos y ejes Y según el checkbox
+  c1_logic <- rk.XML.logic(
+      show_helper_val,
+      rk.XML.connect(governor = c1_df, get = "available", client = c1_sel, set = "root"),
+      rk.XML.connect(governor = "show_helper_val", client = "c1_helper_val.visible"),
+      rk.XML.connect(governor = "c1_p_dist.state", client = "c1_t_dist.enabled"),
+      rk.XML.connect(governor = "c1_p_dist.state", client = "c1_y_dist.enabled"),
+      rk.XML.connect(governor = "c1_p_freq.state", client = "c1_t_freq.enabled"),
+      rk.XML.connect(governor = "c1_p_freq.state", client = "c1_y_freq.enabled"),
+      rk.XML.connect(governor = "c1_p_idx.state",  client = "c1_t_idx.enabled"),
+      rk.XML.connect(governor = "c1_p_idx.state",  client = "c1_y_idx.enabled"),
+      rk.XML.connect(governor = "c1_p_time.state", client = "c1_t_time.enabled"),
+      rk.XML.connect(governor = "c1_p_time.state", client = "c1_y_time.enabled")
+  )
+
+  dialog_dash <- rk.XML.dialog(label = "Sequence Analysis Dashboard", child = rk.XML.row(
+      c1_sel, rk.XML.col(c1_df, rk.XML.tabbook(tabs = list(
+          "Data & Variables" = rk.XML.col(c1_vars, c1_helper_frame, rk.XML.frame(c1_id, label="Metadata"), rk.XML.stretch()),
+          "Missing Data Handling" = rk.XML.col(c1_left, c1_void, c1_right, rk.XML.stretch()),
+
+          # --- NUEVO DISEÑO: Cuadrícula 2x2 con marcos limpios ---
+          "Dashboard Plots" = rk.XML.col(
+              rk.XML.row(
+                  # Columna Izquierda (2 Gráficos)
+                  rk.XML.col(
+                      rk.XML.frame(c1_p_dist, c1_t_dist, c1_y_dist),
+                      rk.XML.frame(c1_p_idx, c1_t_idx, c1_y_idx)
+                  ),
+                  # Columna Derecha (2 Gráficos)
+                  rk.XML.col(
+                      rk.XML.frame(c1_p_freq, c1_t_freq, c1_y_freq),
+                      rk.XML.frame(c1_p_time, c1_t_time, c1_y_time)
+                  )
+              ),
+              rk.XML.frame(label = "Global Appearance", c1_uni_leg, c1_x_angle),
+              rk.XML.stretch()
+          ),
+
+          "Output" = make_device_tab(prefix = "c1", initial_save = "tray_seq", show_save = TRUE)
+      )))
+  ))
+
 
   js_calc_dash <- paste0(js_parse_col, "
     var df = getValue('c1_df');
@@ -115,24 +176,88 @@ local({
     }
   ")
 
-  js_print_dash <- "
-    var p_dist = getValue('c1_p_dist') == 'TRUE'; var p_freq = getValue('c1_p_freq') == 'TRUE'; var p_idx  = getValue('c1_p_idx') == 'TRUE'; var p_time = getValue('c1_p_time') == 'TRUE';
+  js_print_dash <- paste0(js_sanitize_input, js_parse_col, "
+    var p_dist = getValue('c1_p_dist') == 'TRUE';
+    var p_freq = getValue('c1_p_freq') == 'TRUE';
+    var p_idx  = getValue('c1_p_idx') == 'TRUE';
+    var p_time = getValue('c1_p_time') == 'TRUE';
+
+    // Títulos
+    var t_dist = cleanStr(getValue('c1_t_dist'));
+    var t_freq = cleanStr(getValue('c1_t_freq'));
+    var t_idx  = cleanStr(getValue('c1_t_idx'));
+    var t_time = cleanStr(getValue('c1_t_time'));
+
+    // Ejes Y
+    var y_dist = cleanStr(getValue('c1_y_dist'));
+    var y_freq = cleanStr(getValue('c1_y_freq'));
+    var y_idx  = cleanStr(getValue('c1_y_idx'));
+    var y_time = cleanStr(getValue('c1_y_time'));
+
+    var uni_leg = getValue('c1_uni_leg') == 'TRUE';
+    var angle = getValue('c1_x_angle');
+
     if (!is_preview) echo('rk.header(\"Sequence Analysis Dashboard\")\\n');
-    var n_plots = 0; if(p_dist) n_plots++; if(p_freq) n_plots++; if(p_idx) n_plots++; if(p_time) n_plots++;
+
+    var n_plots = 0;
+    if(p_dist) n_plots++;
+    if(p_freq) n_plots++;
+    if(p_idx) n_plots++;
+    if(p_time) n_plots++;
+
     if (n_plots > 0) {
         if(!is_preview) echo('rk.graph.on(device.type=\"' + getValue('c1_dev_type') + '\", width=' + getValue('c1_dev_w') + ', height=' + getValue('c1_dev_h') + ', res=' + getValue('c1_dev_res') + ', bg=\"' + getValue('c1_dev_bg') + '\")\\n');
+
         echo('try({\\n  plot_list <- list()\\n');
-        if(p_dist) echo('  plot_list[[\"p_dist\"]] <- ggseqplot::ggseqdplot(tray_seq) + ggplot2::ggtitle(\"State Distribution\")\\n');
-        if(p_freq) echo('  plot_list[[\"p_freq\"]] <- ggseqplot::ggseqfplot(tray_seq) + ggplot2::ggtitle(\"Most Frequent Sequences\")\\n');
-        if(p_idx)  echo('  plot_list[[\"p_idx\"]]  <- ggseqplot::ggseqiplot(tray_seq, sortv = \"from.start\") + ggplot2::ggtitle(\"Individual Trajectories\")\\n');
-        if(p_time) echo('  plot_list[[\"p_time\"]] <- ggseqplot::ggseqmtplot(tray_seq) + ggplot2::ggtitle(\"Mean Time in States\")\\n');
+
+        var keep_leg = true;
+        function get_guide() {
+            if (!uni_leg) return '';
+            if (keep_leg) { keep_leg = false; return ''; }
+            return ' + ggplot2::guides(fill = \"none\", color = \"none\")';
+        }
+
+        // Helper para inyectar ylab solo si no está en blanco
+        function get_ylab(val) {
+            return (val !== '') ? ' + ggplot2::ylab(\"' + val + '\")' : '';
+        }
+
+        if(p_dist) echo('  plot_list[[\"p_dist\"]] <- ggseqplot::ggseqdplot(tray_seq) + ggplot2::ggtitle(\"' + t_dist + '\")' + get_ylab(y_dist) + get_guide() + '\\n');
+        if(p_freq) echo('  plot_list[[\"p_freq\"]] <- ggseqplot::ggseqfplot(tray_seq) + ggplot2::ggtitle(\"' + t_freq + '\")' + get_ylab(y_freq) + get_guide() + '\\n');
+        if(p_idx)  echo('  plot_list[[\"p_idx\"]]  <- ggseqplot::ggseqiplot(tray_seq, sortv = \"from.start\") + ggplot2::ggtitle(\"' + t_idx + '\")' + get_ylab(y_idx) + get_guide() + '\\n');
+        if(p_time) echo('  plot_list[[\"p_time\"]] <- ggseqplot::ggseqmtplot(tray_seq) + ggplot2::ggtitle(\"' + t_time + '\")' + get_ylab(y_time) + get_guide() + '\\n');
+
         echo('  require(patchwork)\\n');
-        if(n_plots == 1) echo('  p <- plot_list[[1]]\\n'); else echo('  p <- patchwork::wrap_plots(plot_list, ncol = 2)\\n');
-        echo('  p$plot_env <- emptyenv()\\n  print(p)\\n})\\n');
-        if(!is_preview) { echo('rk.graph.off()\\n'); if(getValue('c1_save.active')) echo('assign(paste0(\"' + getValue('c1_save') + '\", \"_plot\"), p, envir = .GlobalEnv)\\n'); }
+        echo('  p <- patchwork::wrap_plots(plot_list, ncol = ' + (n_plots == 1 ? '1' : '2') + ')\\n');
+
+        if (uni_leg) {
+            echo('  p <- p + patchwork::plot_layout(guides = \"collect\")\\n');
+        }
+
+        var themes = [];
+        if (uni_leg) themes.push('legend.position = \"bottom\"');
+        if (angle !== '0') themes.push('axis.text.x = ggplot2::element_text(angle = ' + angle + ', hjust = 1, vjust = 1)');
+
+        if (themes.length > 0) {
+            echo('  p <- p & ggplot2::theme(' + themes.join(', ') + ')\\n');
+        }
+
+        echo('  p$plot_env <- emptyenv()\\n');
+        echo('  print(p)\\n');
+        echo('})\\n');
+
+        if(!is_preview) {
+            echo('rk.graph.off()\\n');
+            if(getValue('c1_save.active')) {
+                echo('assign(paste0(\"' + getValue('c1_save') + '\", \"_plot\"), p, envir = .GlobalEnv)\\n');
+            }
+        }
+    } else {
+        if(!is_preview) echo('rk.print(\"<i>No plots were selected. Only the sequence object was generated.</i>\")\\n');
     }
     echo('rm(list = intersect(ls(), c(\"datos_secuencia\", \"plot_list\", \"p\")))\\ngc()\\n');
-  "
+  ")
+
   comp_dash <- rk.plugin.component("Sequence Dashboard", xml = list(dialog = dialog_dash, logic = c1_logic), js = list(require = c("TraMineR", "dplyr", "ggseqplot", "patchwork"), calculate = js_calc_dash, printout = js_print_dash), hierarchy = h_seq)
 
   # =========================================================================================
@@ -140,35 +265,6 @@ local({
   # =========================================================================================
   c2_sel <- rk.XML.varselector(id.name = "c2_sel")
   c2_df  <- rk.XML.varslot("Main Dataframe", source = "c2_sel", classes = "data.frame", required = TRUE, id.name = "c2_df")
-
-  # 1. Creamos la conversión lógica primero
-  show_helper_val2 <- rk.XML.convert(sources = list("c2_helper_mode.string"), mode = c(notequals = "none"), id.name = "show_helper_val2")
-
-  # 2. Metemos TODO en una sola variable c2_logic separando por comas
-  c2_logic <- rk.XML.logic(
-      show_helper_val2,
-      rk.XML.connect(governor = c2_df, get = "available", client = c2_sel, set = "root"), # La Magia del Focus original
-      rk.XML.connect(governor = "show_helper_val2", client = "c2_helper_val.visible")     # El control del asistente
-  )
-
-  # Pestaña 1: Vars
-  c2_vars <- rk.XML.varslot("Sequence Variables", source = "c2_sel", multi = TRUE, required = FALSE, id.name = "c2_vars")
-  c2_covs <- rk.XML.varslot("Covariates for Profiling (e.g. sexo, migracion)", source = "c2_sel", multi = TRUE, id.name = "c2_covs")
-
-  c2_k <- rk.XML.spinbox("Number of clusters (k)", min = 2, max = 50, initial = 4, id.name = "c2_k")
-  c2_name <- rk.XML.input("Save cluster factor as (column name)", initial = "cluster_tray", id.name = "c2_name")
-  c2_append <- rk.XML.cbox("Append cluster factor to original dataframe", value = "1", chk = TRUE, id.name = "c2_append")
-
-  c2_plot_type <- rk.XML.radio("Plot Type", options = list(
-      "State Distribution Plot by Cluster (ggseqplot)" = list(val = "dist", chk = TRUE),
-      "Hierarchical Dendrogram (hclust)" = list(val = "dendro")
-  ), id.name = "c2_plot_type")
-
-  # NUEVO: Guardar el modelo jerárquico
-  c2_save_model <- rk.XML.saveobj("Save Clustering Model (hclust) as", initial = "cluster_ward", chk = FALSE, id.name = "c2_save_model")
-
-  c2_name <- rk.XML.input(label = "Name for new Cluster column", id.name = "c2_name", initial = "cluster_tray", required = TRUE)
-  c2_append <- rk.XML.cbox("Append cluster column to original Dataframe", id.name = "c2_append", value = "1", chk = TRUE)
 
   c2_helper_mode <- rk.XML.dropdown("Smart Column Selection (tidyselect)", id.name = "c2_helper_mode", options = list(
       "None (Use manual selection above)" = list(val = "none", chk = TRUE),
@@ -181,13 +277,49 @@ local({
   c2_helper_val <- rk.XML.input("Value / Pattern (No quotes needed)", id.name = "c2_helper_val")
   c2_helper_frame <- rk.XML.frame(rk.XML.col(c2_helper_mode, c2_helper_val), label = "Advanced Select", id.name = "c2_helper_frame")
 
+  c2_vars <- rk.XML.varslot("Sequence Variables", source = "c2_sel", multi = TRUE, required = FALSE, id.name = "c2_vars")
+  c2_covs <- rk.XML.varslot("Covariates for Profiling (e.g. sexo, migracion)", source = "c2_sel", multi = TRUE, id.name = "c2_covs")
+
+  c2_k <- rk.XML.spinbox("Number of clusters (k)", min = 2, max = 50, initial = 4, id.name = "c2_k")
   c2_sm <- rk.XML.dropdown("Substitution Cost Method (sm)", options = list(
       "Constant Cost (CONSTANT)" = list(val = "CONSTANT", chk = TRUE),
       "Transition Rates (TRATE) - Data driven" = list(val = "TRATE")
   ), id.name = "c2_sm")
 
+  c2_name <- rk.XML.input(label = "Name for new Cluster column", id.name = "c2_name", initial = "cluster_tray", required = TRUE)
+  c2_append <- rk.XML.cbox("Append cluster column to original Dataframe", id.name = "c2_append", value = "1", chk = TRUE)
+
+  c2_plot_type <- rk.XML.radio("Plot Type", options = list(
+      "State Distribution Plot by Cluster (ggseqplot)" = list(val = "dist", chk = TRUE),
+      "Hierarchical Dendrogram (hclust)" = list(val = "dendro")
+  ), id.name = "c2_plot_type")
+
+  # --- NUEVOS CONTROLES DE APARIENCIA (Componente 2) ---
+  c2_t_dist  <- rk.XML.input("Plot Title:", initial = "Hierarchical Dendrogram / State Distribution", id.name = "c2_t_dist")
+  # NUEVO: Caja para el eje Y (Usamos el mismo texto que el Componente 1 para reusar traducciones)
+  c2_y_label <- rk.XML.input("Y-axis (blank for auto):", id.name = "c2_y_label")
+
+  c2_uni_leg <- rk.XML.cbox("Move legend to bottom", value = "TRUE", chk = TRUE, id.name = "c2_uni_leg")
+  c2_x_angle <- rk.XML.spinbox("X-axis text angle (degrees)", min = 0, max = 90, initial = 0, id.name = "c2_x_angle")
+  c2_appear_frame <- rk.XML.frame(label = "Plot Appearance", c2_t_dist, c2_y_label, c2_uni_leg, c2_x_angle, id.name = "c2_appear_frame")
+
+  c2_save_model <- rk.XML.saveobj("Save Clustering Model (hclust) as", initial = "cluster_ward", chk = FALSE, id.name = "c2_save_model")
+
+  # --- LÓGICA DE INTERFAZ ACTUALIZADA ---
+  show_helper_val2 <- rk.XML.convert(sources = list("c2_helper_mode.string"), mode = c(notequals = "none"), id.name = "show_helper_val2")
+  is_dist_plot <- rk.XML.convert(sources = list("c2_plot_type.string"), mode = c(equals = "dist"), id.name = "is_dist_plot")
+
+  c2_logic <- rk.XML.logic(
+      show_helper_val2, is_dist_plot,
+      rk.XML.connect(governor = c2_df, get = "available", client = c2_sel, set = "root"),
+      rk.XML.connect(governor = "show_helper_val2", client = "c2_helper_val.visible"),
+      # CORRECCIÓN: Ahora solo apagamos la leyenda y el ángulo de X si eligen Dendrograma. El Título y el Eje Y siguen activos.
+      rk.XML.connect(governor = "is_dist_plot", client = "c2_uni_leg.enabled"),
+      rk.XML.connect(governor = "is_dist_plot", client = "c2_x_angle.enabled")
+  )
+
   # UI Integration
-   dialog_clust <- rk.XML.dialog(
+  dialog_clust <- rk.XML.dialog(
       label = "Sequence Clustering & Typology",
       child = rk.XML.row(
           c2_sel,
@@ -202,15 +334,13 @@ local({
                   ),
                   "Clustering Settings" = rk.XML.col(
                       rk.XML.text("<b>Method:</b> Optimal Matching (Constant Cost) to Ward Hierarchical Clustering"),
-                      c2_k,
-                      c2_sm,
-                      c2_name,
-                      c2_append,
-                      c2_plot_type,
-                      c2_save_model, # <-- Añadido aquí
+                      rk.XML.row(
+                          rk.XML.col(c2_k, c2_sm, c2_name, c2_append),
+                          rk.XML.col(c2_plot_type, c2_appear_frame)
+                      ),
+                      c2_save_model,
                       rk.XML.stretch()
                   ),
-                  # CAMBIO: show_save = TRUE, initial_save = "cluster_plot"
                   "Output" = make_device_tab(prefix = "c2", initial_save = "cluster_plot", show_save = TRUE)
               ))
           )
@@ -270,10 +400,16 @@ js_calc_clust <- paste0(js_parse_col, "
     }
   ")
 
-js_print_clust <- paste0(js_parse_col, "
+
+js_print_clust <- paste0(js_sanitize_input, js_parse_col, "
     var k = getValue('c2_k');
     var df = getValue('c2_df');
     var plot_type = getValue('c2_plot_type');
+
+    var title = cleanStr(getValue('c2_t_dist'));
+    var ylab = cleanStr(getValue('c2_y_label')); // Extrae el eje Y
+    var uni_leg = getValue('c2_uni_leg') == 'TRUE';
+    var angle = getValue('c2_x_angle');
 
     var cov_val = getValue('c2_covs');
     var cov_list = [];
@@ -301,14 +437,25 @@ js_print_clust <- paste0(js_parse_col, "
     echo('try({\\n');
 
     if (plot_type === 'dist') {
-        echo('  cluster_plot <- ggseqplot::ggseqdplot(tray_seq, group = cluster_factor) + ggplot2::ggtitle(\"State Distribution by Cluster\")\\n');
+        var ylab_gg = (ylab !== '') ? ' + ggplot2::ylab(\"' + ylab + '\")' : '';
+        echo('  cluster_plot <- ggseqplot::ggseqdplot(tray_seq, group = cluster_factor) + ggplot2::ggtitle(\"' + title + '\")' + ylab_gg + '\\n');
+
+        var themes = [];
+        if (uni_leg) themes.push('legend.position = \"bottom\"');
+        if (angle !== '0') themes.push('axis.text.x = ggplot2::element_text(angle = ' + angle + ', hjust = 1, vjust = 1)');
+
+        if (themes.length > 0) {
+            echo('  cluster_plot <- cluster_plot + ggplot2::theme(' + themes.join(', ') + ')\\n');
+        }
+
         echo('  cluster_plot$plot_env <- emptyenv()\\n');
         echo('  print(cluster_plot)\\n');
     } else {
-        echo('  plot(cluster_ward, labels = FALSE, main = \"Hierarchical Dendrogram (Ward)\", xlab = \"\", sub = \"\")\\n');
+        // INYECCIÓN PARA EL DENDROGRAMA (R BASE)
+        var ylab_base = (ylab !== '') ? ', ylab = \"' + ylab + '\"' : '';
+        echo('  plot(cluster_ward, labels = FALSE, main = \"' + title + '\"' + ylab_base + ', xlab = \"\", sub = \"\")\\n');
         echo('  rect.hclust(cluster_ward, k = ' + k + ', border = \"red\")\\n');
 
-        // TRUCO SALVAVIDAS: Creamos un objeto NULL para que RKWard no explote al intentar guardar el gráfico
         echo('  cluster_plot <- NULL\\n');
     }
 
@@ -317,7 +464,6 @@ js_print_clust <- paste0(js_parse_col, "
     if(!is_preview){
         echo('rk.graph.off()\\n');
 
-        // Imprimimos el mensaje rojo AFUERA del gráfico
         if (plot_type !== 'dist' && getValue('c2_save.active')) {
             echo('rk.print(\"<span style=\\'color:red;\\'>Note: Base R Dendrograms cannot be saved as plot objects. Save object set to NULL.</span>\")\\n');
         }
@@ -326,8 +472,6 @@ js_print_clust <- paste0(js_parse_col, "
     echo('rm(list = intersect(ls(), c(\"datos_secuencia\", \"tray_seq\", \"dist_matrix\", \"cluster_factor\")))\\n');
     echo('gc()\\n');
   ")
-
-  comp_clust <- rk.plugin.component("Sequence Clustering", xml = list(dialog = dialog_clust, logic = c2_logic), js = list(require = c("TraMineR", "dplyr", "ggseqplot", "cluster"), calculate = js_calc_clust, printout = js_print_clust), hierarchy = h_seq)
 
 # =========================================================================================
   # COMPONENT 3: Extract Sequence Indicators
@@ -463,5 +607,5 @@ js_print_clust <- paste0(js_parse_col, "
     load = TRUE, overwrite = TRUE, show = FALSE
   )
 
-  cat("\nPlugin package 'rk.traminer' (v0.0.3) generated successfully.\n")
+  cat("\nPlugin package 'rk.traminer' (v0.0.4) generated successfully.\n")
 })

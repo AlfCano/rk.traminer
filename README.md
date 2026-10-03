@@ -1,6 +1,6 @@
 # rk.traminer: Sequence Analysis & Trajectory Mining for RKWard
 
-![Version](https://img.shields.io/badge/Version-0.0.3-blue.svg)
+![Version](https://img.shields.io/badge/Version-0.0.4-blue.svg)
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![RKWard](https://img.shields.io/badge/Platform-RKWard-green)
 [![R Linter](https://github.com/AlfCano/rk.traminer/actions/workflows/lintr.yml/badge.svg)](https://github.com/AlfCano/rk.traminer/actions/workflows/lintr.yml)
@@ -8,6 +8,15 @@
 **rk.traminer** brings the power of Sequence Analysis (Life-course trajectories) to the RKWard GUI. It provides a highly optimized, user-friendly interface for the gold-standard [`TraMineR`](http://traminer.unige.ch/) package. By integrating [`ggseqplot`](https://maraab23.github.io/ggseqplot/) and `patchwork`, it completely modernizes the visual output, allowing researchers in sociology, demography, and economics to easily construct state sequence objects and render stunning, publication-ready dashboards and complexity analysis.
 
 ---
+
+## 🚀 What's New in Version 0.0.4
+
+**🎨 Ultimate Aesthetic Control & UI Ergonomics**
+
+*   **Custom Titles & Y-Axes:** Added full support for customizing titles and Y-axis labels for every individual plot in the dashboard and clustering modules. You can now easily replace default English tags for seamless international reporting.
+*   **Unified Legends:** Implemented advanced `patchwork` logic (`guides = 'collect'`) to strip redundant individual legends and unify them beautifully at the bottom of your multi-plot dashboard.
+*   **X-Axis Readability:** Added a spinbox to rotate X-axis labels (e.g., 45 or 90 degrees) to prevent overlapping text when dealing with long chronological periods or state names.
+*   **Ergonomic UI Redesign:** Completely redesigned the "Dashboard Plots" tab into a clean 2x2 visual grid. The UI now uses RKWard logic to intelligently enable/disable text boxes based on the user's plot selections, keeping the interface uncluttered.
 
 ## 🚀 What's New in Version 0.0.3
 
@@ -123,7 +132,7 @@ If you encounter errors mentioning "non-zero exit status", "namespace is already
 CRAN provides easy-to-install, pre-compiled binaries primarily for the latest R versions. To bypass the need for manual compilation and RTools:
 
 1.  **Update R:** Download and install the latest stable version of R directly from [CRAN](https://cloud.r-project.org/).
-2.  **Link to RKWard:** Open RKWard, navigate to the **Settings** (or Preferences) menu, and run the **"Installation Checker"**.
+2.  **Link to RKWard:** Open RKWard, go to the top menu bar and navigate to **Settings -> Check Installation...**
 3.  **Switch the Engine:** Point RKWard to the newly installed R executable (e.g., `C:\Program Files\R\R-4.x.x`).
 
 This standard "two-step" setup (updating R independently of RKWard) guarantees you always have access to the latest pre-compiled binaries, keeping your plugin installations smooth and error-free.

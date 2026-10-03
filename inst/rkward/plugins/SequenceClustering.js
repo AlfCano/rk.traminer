@@ -116,6 +116,11 @@ function printout(is_preview){
 	if(!is_preview) {
 		new Header(i18n("Sequence Clustering results")).print();	
 	}
+    function cleanStr(val) {
+        if(!val) return '';
+        return val.replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, '\\n');
+    }
+  
     function getRawCol(fullPath) {
         if (!fullPath) return '';
         var raw = fullPath;
@@ -140,6 +145,11 @@ function printout(is_preview){
     var k = getValue('c2_k');
     var df = getValue('c2_df');
     var plot_type = getValue('c2_plot_type');
+
+    var title = cleanStr(getValue('c2_t_dist'));
+    var ylab = cleanStr(getValue('c2_y_label')); // Extrae el eje Y
+    var uni_leg = getValue('c2_uni_leg') == 'TRUE';
+    var angle = getValue('c2_x_angle');
 
     var cov_val = getValue('c2_covs');
     var cov_list = [];
@@ -167,14 +177,25 @@ function printout(is_preview){
     echo('try({\n');
 
     if (plot_type === 'dist') {
-        echo('  cluster_plot <- ggseqplot::ggseqdplot(tray_seq, group = cluster_factor) + ggplot2::ggtitle("State Distribution by Cluster")\n');
+        var ylab_gg = (ylab !== '') ? ' + ggplot2::ylab("' + ylab + '")' : '';
+        echo('  cluster_plot <- ggseqplot::ggseqdplot(tray_seq, group = cluster_factor) + ggplot2::ggtitle("' + title + '")' + ylab_gg + '\n');
+
+        var themes = [];
+        if (uni_leg) themes.push('legend.position = "bottom"');
+        if (angle !== '0') themes.push('axis.text.x = ggplot2::element_text(angle = ' + angle + ', hjust = 1, vjust = 1)');
+
+        if (themes.length > 0) {
+            echo('  cluster_plot <- cluster_plot + ggplot2::theme(' + themes.join(', ') + ')\n');
+        }
+
         echo('  cluster_plot$plot_env <- emptyenv()\n');
         echo('  print(cluster_plot)\n');
     } else {
-        echo('  plot(cluster_ward, labels = FALSE, main = "Hierarchical Dendrogram (Ward)", xlab = "", sub = "")\n');
+        // INYECCIÓN PARA EL DENDROGRAMA (R BASE)
+        var ylab_base = (ylab !== '') ? ', ylab = "' + ylab + '"' : '';
+        echo('  plot(cluster_ward, labels = FALSE, main = "' + title + '"' + ylab_base + ', xlab = "", sub = "")\n');
         echo('  rect.hclust(cluster_ward, k = ' + k + ', border = "red")\n');
 
-        // TRUCO SALVAVIDAS: Creamos un objeto NULL para que RKWard no explote al intentar guardar el gráfico
         echo('  cluster_plot <- NULL\n');
     }
 
@@ -183,7 +204,6 @@ function printout(is_preview){
     if(!is_preview){
         echo('rk.graph.off()\n');
 
-        // Imprimimos el mensaje rojo AFUERA del gráfico
         if (plot_type !== 'dist' && getValue('c2_save.active')) {
             echo('rk.print("<span style=\'color:red;\'>Note: Base R Dendrograms cannot be saved as plot objects. Save object set to NULL.</span>")\n');
         }

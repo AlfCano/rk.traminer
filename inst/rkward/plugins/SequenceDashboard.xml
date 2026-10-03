@@ -14,6 +14,14 @@
 		<convert id="show_helper_val" sources="c1_helper_mode.string" mode="notequals" standard="none" />
 		<connect governor="c1_df.available" client="c1_sel.root" />
 		<connect governor="show_helper_val.state" client="c1_helper_val.visible.enabled" />
+		<connect governor="c1_p_dist.state.state" client="c1_t_dist.enabled.enabled" />
+		<connect governor="c1_p_dist.state.state" client="c1_y_dist.enabled.enabled" />
+		<connect governor="c1_p_freq.state.state" client="c1_t_freq.enabled.enabled" />
+		<connect governor="c1_p_freq.state.state" client="c1_y_freq.enabled.enabled" />
+		<connect governor="c1_p_idx.state.state" client="c1_t_idx.enabled.enabled" />
+		<connect governor="c1_p_idx.state.state" client="c1_y_idx.enabled.enabled" />
+		<connect governor="c1_p_time.state.state" client="c1_t_time.enabled.enabled" />
+		<connect governor="c1_p_time.state.state" client="c1_y_time.enabled.enabled" />
 	</logic>
 	<dialog label="Sequence Analysis Dashboard">
 		<row id="row_v11SD1DVDV">
@@ -61,11 +69,37 @@
 						</column>
 					</tab>
 					<tab label="Dashboard Plots" id="tab_DshbrdPl">
-						<column id="clm_c1SDPTRUE1">
-							<checkbox id="c1_p_dist" label="State Distribution Plot" value="TRUE" checked="true" />
-							<checkbox id="c1_p_freq" label="Sequence Frequency Plot" value="TRUE" checked="true" />
-							<checkbox id="c1_p_idx" label="Sequence Index Plot" value="TRUE" checked="true" />
-							<checkbox id="c1_p_time" label="Mean Time Plot" value="TRUE" checked="true" />
+						<column id="clm_r1SDPTRUET">
+							<row id="row_c1SDPTRUET">
+								<column id="clm_f1SDPTRUET">
+									<frame id="frm_c1SDPTRUET">
+										<checkbox id="c1_p_dist" label="State Distribution Plot" value="TRUE" checked="true" />
+										<input label="Title:" id="c1_t_dist" initial="State Distribution" />
+										<input label="Y-axis (blank for auto):" id="c1_y_dist" />
+									</frame>
+									<frame id="frm_c1SIPTRUET">
+										<checkbox id="c1_p_idx" label="Sequence Index Plot" value="TRUE" checked="true" />
+										<input label="Title:" id="c1_t_idx" initial="Individual Trajectories" />
+										<input label="Y-axis (blank for auto):" id="c1_y_idx" />
+									</frame>
+								</column>
+								<column id="clm_f1SFPTRUET">
+									<frame id="frm_c1SFPTRUET">
+										<checkbox id="c1_p_freq" label="Sequence Frequency Plot" value="TRUE" checked="true" />
+										<input label="Title:" id="c1_t_freq" initial="Most Frequent Sequences" />
+										<input label="Y-axis (blank for auto):" id="c1_y_freq" />
+									</frame>
+									<frame id="frm_c1MTPTRUET">
+										<checkbox id="c1_p_time" label="Mean Time Plot" value="TRUE" checked="true" />
+										<input label="Title:" id="c1_t_time" initial="Mean Time in States" />
+										<input label="Y-axis (blank for auto):" id="c1_y_time" />
+									</frame>
+								</column>
+							</row>
+							<frame label="Global Appearance" id="frm_GlblAppr">
+								<checkbox id="c1_uni_leg" label="Unify legend at bottom (plot_layout guides = 'collect')" value="TRUE" checked="true" />
+								<spinbox label="X-axis text angle (degrees)" id="c1_x_angle" min="0" max="90" />
+							</frame>
 							<stretch />
 						</column>
 					</tab>

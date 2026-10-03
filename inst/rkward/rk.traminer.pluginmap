@@ -20,8 +20,8 @@
 		name="rk.traminer"
 		shortinfo="An RKWard GUI plugin for Sequence Analysis and Trajectory mining using TraMineR."
 		longinfo="An RKWard GUI plugin for Sequence Analysis and Trajectory mining using TraMineR."
-		version="0.0.3"
-		releasedate="2026-10-02"
+		version="0.0.4"
+		releasedate="2026-10-03"
 		url="https://github.com/AlfCano/rk.traminer"
 		license="GPL (&gt;= 3)"
 	>

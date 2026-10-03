@@ -12,8 +12,11 @@
 	-->
 	<logic>
 		<convert id="show_helper_val2" sources="c2_helper_mode.string" mode="notequals" standard="none" />
+		<convert id="is_dist_plot" sources="c2_plot_type.string" mode="equals" standard="dist" />
 		<connect governor="c2_df.available" client="c2_sel.root" />
 		<connect governor="show_helper_val2.state" client="c2_helper_val.visible.enabled" />
+		<connect governor="is_dist_plot.state" client="c2_uni_leg.enabled.enabled" />
+		<connect governor="is_dist_plot.state" client="c2_x_angle.enabled.enabled" />
 	</logic>
 	<dialog label="Sequence Clustering &amp; Typology">
 		<row id="row_v22MD2DCDC">
@@ -51,17 +54,29 @@
 								</b>
 								Optimal Matching (Constant Cost) to Ward Hierarchical Clustering
 							</text>
-							<spinbox label="Number of clusters (k)" id="c2_k" initial="4" min="2" max="50" />
-							<dropdown id="c2_sm" label="Substitution Cost Method (sm)">
-								<option label="Constant Cost (CONSTANT)" value="CONSTANT" checked="true" />
-								<option label="Transition Rates (TRATE) - Data driven" value="TRATE" />
-							</dropdown>
-							<input label="Name for new Cluster column" id="c2_name" initial="cluster_tray" required="true" />
-							<checkbox id="c2_append" label="Append cluster column to original Dataframe" value="1" checked="true" />
-							<radio id="c2_plot_type" label="Plot Type">
-								<option label="State Distribution Plot by Cluster (ggseqplot)" value="dist" checked="true" />
-								<option label="Hierarchical Dendrogram (hclust)" value="dendro" />
-							</radio>
+							<row id="row_cN242502SC">
+								<column id="clm_sN242502SC">
+									<spinbox label="Number of clusters (k)" id="c2_k" initial="4" min="2" max="50" />
+									<dropdown id="c2_sm" label="Substitution Cost Method (sm)">
+										<option label="Constant Cost (CONSTANT)" value="CONSTANT" checked="true" />
+										<option label="Transition Rates (TRATE) - Data driven" value="TRATE" />
+									</dropdown>
+									<input label="Name for new Cluster column" id="c2_name" initial="cluster_tray" required="true" />
+									<checkbox id="c2_append" label="Append cluster column to original Dataframe" value="1" checked="true" />
+								</column>
+								<column id="clm_r2PTSDPCHD">
+									<radio id="c2_plot_type" label="Plot Type">
+										<option label="State Distribution Plot by Cluster (ggseqplot)" value="dist" checked="true" />
+										<option label="Hierarchical Dendrogram (hclust)" value="dendro" />
+									</radio>
+									<frame label="Plot Appearance" id="c2_appear_frame">
+										<input label="Plot Title:" id="c2_t_dist" initial="Hierarchical Dendrogram / State Distribution" />
+										<input label="Y-axis (blank for auto):" id="c2_y_label" />
+										<checkbox id="c2_uni_leg" label="Move legend to bottom" value="TRUE" checked="true" />
+										<spinbox label="X-axis text angle (degrees)" id="c2_x_angle" min="0" max="90" />
+									</frame>
+								</column>
+							</row>
 							<saveobject label="Save Clustering Model (hclust) as" checkable="true" initial="cluster_ward" id="c2_save_model" />
 							<stretch />
 						</column>

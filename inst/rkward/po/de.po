@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rk.traminer 0.0.3\n"
+"Project-Id-Version: rk.traminer 0.0.4\n"
 "Report-Msgid-Bugs-To: alfonso.cano@correo.buap.mx\n"
-"POT-Creation-Date: 2026-09-19 20:18-0600\n"
-"PO-Revision-Date: 2026-09-19 20:18-0600\n"
+"POT-Creation-Date: 2026-10-03 11:34-0600\n"
+"PO-Revision-Date: 2026-10-03 11:34-0600\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -122,12 +122,9 @@ msgstr "Kreuztabelle: Kovariaten nach Cluster"
 msgid "<b>Covariate:</b>"
 msgstr "<b>Kovariate:</b>"
 
-msgid "<span style='color:red;'>Note: Base R Dendrograms cannot be saved as plot objects.</span>"
-msgstr "<span style='color:red;'>Hinweis: Base R Dendrogramme können nicht als Grafikobjekte gespeichert werden.</span>"
+msgid "<span style='color:red;'>Note: Base R Dendrograms cannot be saved as plot objects. Save object set to NULL.</span>"
+msgstr "<span style='color:red;'>Hinweis: Base R Dendrogramme können nicht gespeichert werden. Objekt auf NULL gesetzt.</span>"
 
-# =========================================================
-# MODIFICACIONES C2 / COMPONENTES 3 Y 4
-# =========================================================
 msgid "Substitution Cost Method (sm)"
 msgstr "Substitutionskosten-Methode (sm)"
 
@@ -136,9 +133,6 @@ msgstr "Konstante Kosten (CONSTANT)"
 
 msgid "Transition Rates (TRATE) - Data driven"
 msgstr "Übergangsraten (TRATE) - Datenbasiert"
-
-msgid "<span style='color:red;'>Note: Base R Dendrograms cannot be saved as plot objects. Save object set to NULL.</span>"
-msgstr "<span style='color:red;'>Hinweis: Base R Dendrogramme können nicht gespeichert werden. Objekt auf NULL gesetzt.</span>"
 
 msgid "3. Sequence Indicators"
 msgstr "3. Sequenzindikatoren"
@@ -197,3 +191,23 @@ msgstr "Übergangsmatrix speichern unter"
 msgid "<i>Probabilities of moving from state i (row) to state j (column).</i>"
 msgstr "<i>Wahrscheinlichkeit des Wechsels von Zustand i (Zeile) zu Zustand j (Spalte).</i>"
 
+msgid "Title:"
+msgstr "Titel:"
+
+msgid "Y-axis (blank for auto):"
+msgstr "Y-Achse (leer für auto):"
+
+msgid "Global Appearance"
+msgstr "Globales Erscheinungsbild"
+
+msgid "Plot Appearance"
+msgstr "Diagramm-Erscheinungsbild"
+
+msgid "Unify legend at bottom (plot_layout guides = 'collect')"
+msgstr "Legende unten vereinheitlichen (plot_layout guides = 'collect')"
+
+msgid "Move legend to bottom"
+msgstr "Legende nach unten verschieben"
+
+msgid "X-axis text angle (degrees)"
+msgstr "Winkel der X-Achsen-Beschriftung (Grad)"
